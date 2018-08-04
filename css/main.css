@@ -22,6 +22,7 @@ a:hover {
 h1 {
     font-size: 3em;
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    color: #f5fce5;
 }
 p {
     font-size: 1.5em;
@@ -31,6 +32,7 @@ p {
 footer {
     border-top: 1px solid #f5fce5;
     font-size: .8em;
+    color: #f5fce5;
 }
 
 ul.posts { 
