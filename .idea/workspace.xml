@@ -79,8 +79,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cv/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1574">
-              <caret line="123" column="35" selection-start-line="123" selection-start-column="35" selection-end-line="123" selection-end-column="35" />
+            <state relative-caret-position="745">
+              <caret line="204" lean-forward="true" selection-start-line="204" selection-end-line="204" />
             </state>
           </provider>
         </entry>
@@ -304,12 +304,12 @@
       <option name="presentableId" value="Default" />
       <updated>1533399770691</updated>
       <workItem from="1533399772280" duration="1823000" />
-      <workItem from="1535398289287" duration="4337000" />
+      <workItem from="1535398289287" duration="4830000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6160000" />
+    <option name="totallyTimeSpent" value="6653000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="68" y="22" width="1612" height="1028" extended-state="6" />
@@ -325,7 +325,7 @@
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32929516" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32929516" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.22547771" />
@@ -352,7 +352,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22547771" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.22547771" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -489,8 +489,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cv/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1574">
-          <caret line="123" column="35" selection-start-line="123" selection-start-column="35" selection-end-line="123" selection-end-column="35" />
+        <state relative-caret-position="745">
+          <caret line="204" lean-forward="true" selection-start-line="204" selection-end-line="204" />
         </state>
       </provider>
     </entry>
