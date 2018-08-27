@@ -1,0 +1,40 @@
+---
+layout: default
+title: Prashant Talele, Lead Engineer. Discover Financial Services
+---
+<div class="blurb" style="background: black">
+    <div class="w3-container">
+        <div class="w3-card w3-section">
+            <header class="w3-container w3-teal">
+                <h1>XLSX Stream Reader</h1>
+            </header>
+            <div class="w3-container">
+                <p>
+                    If you've used Apache POI in the past to read in Excel files, you probably noticed that it's not very memory efficient. Reading in an entire workbook will cause a severe memory usage spike, which can wreak havoc on a server.
+
+                    There are plenty of good reasons for why Apache has to read in the whole workbook, but most of them have to do with the fact that the library allows you to read and write with random addresses. If (and only if) you just want to read the contents of an Excel file in a fast and memory effecient way, you probably don't need this ability. Unfortunately, the only thing in the POI library for reading a streaming workbook requires your code to use a SAX-like parser. All of the friendly classes like Row and Cell are missing from that API.
+
+                    This library serves as a wrapper around that streaming API while preserving the syntax of the standard POI API. Read on to see if it's right for you.
+            </div>
+            <footer class="w3-container w3-teal">
+                <h5>This library will ONLY work with XLSX files. The older XLS format is not capable of being streamed.</h5>
+            </footer>
+        </div>
+
+        <div class="w3-card-4 w3-section">
+            <div class="w3-container w3-teal">
+                <h2>StyleGuide</h2>
+            </div>
+            <div class="w3-container">
+                <p>Every major open-source project has its own style guide: a set of conventions (sometimes arbitrary) about how to write code for that project. It is much easier to understand a large codebase when all the code in it is in a consistent style.
+                    “Style” covers a lot of ground, from “use camelCase for variable names” to “never use global variables” to “never use exceptions.” This project holds the style guidelines we use for Google code. If you are modifying a project that originated at Google, you may be pointed to this page to see the style guides that apply to that project.
+            </div>
+            <!--img src="img_snowtops.jpg" alt="Alps" style="width:100%"-->
+            <div class="w3-container w3-center">
+                <p>See http://creativecommons.org/licenses/by/3.0/ for more details.</p>
+            </div>
+        </div>
+    </div>
+
+    <p><a href="https://github.com/ptalele">Github.com/ptalele</p>
+</div><!-- /.blurb -->
