@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head profile="http://www.w3.org/2005/10/profile">
+    <title>{{ page.title }}</title>
+    <!-- link to main stylesheet -->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="icon" type="image/png" href="../images/prash.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="background-color:black;">
+<nav>
+    <ul>
+        <li><a href="/">HOME</a></li>
+        <li><a href="/about">ABOUT</a></li>
+        <li><a href="/cv">PROFILE</a></li>
+        <li><a href="/work">WORK</a></li>
+        <li><a href="/blog">BLOG</a></li>
+    </ul>
+    <hr>
+</nav>
+<div class="container">
+
+    {{ content }}
+
+</div><!-- /.container -->
+<footer>
+    <ul>
+        <li><a href="mailto:prashant.talele@gmail.com">Email</a></li>
+        <li><a href="https://github.com/ptalele">github.com/ptalele</a></li>
+    </ul>
+</footer>
+</body>
+</html>
