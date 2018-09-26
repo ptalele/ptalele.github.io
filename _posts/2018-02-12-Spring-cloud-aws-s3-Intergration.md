@@ -8,7 +8,8 @@ date: 2018-02-12
 
 In this quick article, we’re going to explore the AWS support provided in the Spring Cloud platform – focusing on S3.
 
-####What is AWS S3 Bucket?
+#### What is AWS S3 Bucket?
+
 S3 bucket is a storage as a service of AWS i.e amazon web services, this service is used to store heterogeneous objects means any type of file or folder. S3 bucket is basically used to store data on a cloud with security, integrity, and Accessibility  Aws claims that file or folder will be accessible 99.9% of all the time 0.1% due to any un deterministic fault in the system, so most of the developers prefer to use to store data for there servers.
  
 This service stores data in buckets used as containers to store data objects, you can make many buckets and buckets are individually have read and write access to different users so admin of S3 bucket has right to give access to any user for read only or write only or just read the properties of file only, this service has 1 great feature for security that is the file is secured and only accessible through secured link which is generated and destroyed after some time (after expiry time) so every time user access the file he has to ask for new secured link to access that file.
@@ -48,7 +49,7 @@ AmazonS3 s3client = AmazonS3ClientBuilder
   .withRegion(Regions.US_EAST_2)
   .build();
 ```
-####Amazon S3 Bucket Operations
+#### Amazon S3 Bucket Operations
 
 ***List buckets***
 
@@ -92,7 +93,7 @@ try {
 }
 ```
 
-####S3 Object Operations
+#### S3 Object Operations
 
  Below operations can be done on s3 objects like uploading, listing, downloading, copying, moving, renaming and deleting.
  
