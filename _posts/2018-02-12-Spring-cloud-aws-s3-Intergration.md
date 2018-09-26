@@ -4,8 +4,6 @@ title: "Integration with AWS S3 using spring cloud"
 date: 2018-02-12
 ---
 
-# Integration with AWS S3 using spring cloud
-
 In this quick article, we’re going to explore the AWS support provided in the Spring Cloud platform – focusing on S3.
 
 #### What is AWS S3 Bucket?
