@@ -4,7 +4,7 @@ title: "React Js - Tic Tac Toe"
 date: 2018-11-25
 ---
 
-A Small game of tic tac toe to learn React. The techniques learned in this funny code jurney are fundamental of building any React apps.
+A Small game of tic tac toe to learn React. The techniques learned in this code jurney are fundamental of building any React application.
 
 It actually was a lot easier than I thought it was going to be.
 ## Prerequisites
