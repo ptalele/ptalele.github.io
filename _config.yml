@@ -1,3 +1,5 @@
 name: Prashant Talele, Lead Engineer
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title
+
+theme: jekyll-theme-cayman
