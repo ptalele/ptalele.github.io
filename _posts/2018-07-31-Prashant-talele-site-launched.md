@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Prashant Talele, Launches Site"
+title: "New look for site"
 date: 2018-07-31
 ---
 
