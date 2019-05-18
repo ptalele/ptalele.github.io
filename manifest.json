@@ -2,7 +2,7 @@
   "name": "profile",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://www.prashanttalele.com/",
+  "homepage": "https://www.prashanttalele.com",
   "dependencies": {
     "gh-pages": "^2.0.1",
     "react": "^16.8.3",
