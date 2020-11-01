@@ -1,0 +1,280 @@
+<html>
+<head>
+    <title>Talele Math Worksheet</title>
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #TBL, #TBL * {
+                visibility: visible;
+            }
+            #TBL, #worksheet {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 90%;
+                height: 100%;
+            }
+            table, th, td {
+                border: 1px;
+            }
+        }
+    </style>
+</head>
+
+<body><p>
+<div id="Configuration"><strong> &nbsp; &nbsp; &nbsp; Configuration</strong>
+    <br /> Number of Problems:
+    <input type="text" id="NumProb" size="5" onchange="NewConfig(); NewSet();">
+    <br /> Number of Columns on the Page:
+    <input type="text" id="ColPage" size="5" onchange="NewConfig()">
+    <br /> Minimum Value:
+    <input type="text" id="MinVal" size="5" onchange="NewConfig()">
+    <br /> Maximum Value:
+    <input type="text" id="MaxVal" size="5" onchange="NewConfig()">
+    <br /> Should top number always be larger than bottom number?:
+    <input type="checkbox" id="ReMax" onchange="NewConfig()">
+    <br /> Worksheet Type:
+    <select name="MathAction" id="MathAction">
+        <option value="add">Addition</option>
+        <option value="sub">Subtraction</option>
+        <option value="mul">Multiplication</option>
+        <option value="div">Division</option>
+    </select>
+</div> <!-- end Configuration -->
+<hr />
+<div id="Actions"><strong> &nbsp; &nbsp; &nbsp; Actions</strong>
+    <br /> <button onclick="NewSet()">New set of random values</button>
+    <button onclick="NewSet(); Scramble();">Same values in a different order</button>
+    <br /> <button onclick="NewSet(); GenerateWS();">Generate Worksheet</button>
+    <input type="checkbox" id="answers">Show Answers <br />
+    <input type="button" value="Print this page" onClick="printDiv()"><br />
+</div> <!-- end Actions -->
+<div id="TBL"></div> <!-- this is the worksheet -->
+<div id="dbg"></div> <!-- debugging setup goes here -->
+<div id="test"></div> <!-- debugging messages go here -->
+</p></body>
+
+<script type="text/javascript">
+    var Debug = false;
+    if (Debug === true) {
+        document.getElementById("dbg").innerHTML += "<hr /> DEBUG MODE ACTIVE";
+        document.getElementById("dbg").innerHTML += "<br /> <button onclick=\"ShowConfig()\">show current configuration</button> <button onclick=\"NewConfig()\">load new configuration</button> <br /> <br /> <button onclick=\"ClearDebugMessages()\">clear debugging messages</button> <br /> ---- DEBUG MESSAGES BELOW ----";
+    }
+
+    var NumberOfProblems = 15;
+    var ColumnsOnPage = 3;
+    var MinimumValue = 0;
+    var MaximumValue = 999;
+    var TopBigger = false;
+
+    document.getElementById("NumProb").value = NumberOfProblems;
+    document.getElementById("ColPage").value = ColumnsOnPage;
+    document.getElementById("MinVal").value = MinimumValue;
+    document.getElementById("MaxVal").value = MaximumValue;
+    document.getElementById("ReMax").checked = TopBigger;
+
+    if (Debug === true) {
+        document.getElementById("test").innerHTML += "<br /> debug: worksheet variables defined and filled in";
+    }
+
+    function RandomSet() {
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br /> debug: RandomSet of numbers with [";
+            document.getElementById("test").innerHTML += NumberOfProblems + " " + ColumnsOnPage + " ";
+            document.getElementById("test").innerHTML += MinimumValue + " " + MaximumValue + " ";
+            document.getElementById("test").innerHTML += TopBigger + " " + MathAction.value;
+            document.getElementById("test").innerHTML += "] configuration <br /> debug: ";
+            document.getElementById("test").innerHTML += "current array of length " + xvals.length;
+            for (var i=0; i<xvals.length; i++) {
+                document.getElementById("test").innerHTML += "<br />" + xvals[i] + "-" + yvals[i];
+                document.getElementById("test").innerHTML += "(" + i+1 + ")<br />";
+            }
+            document.getElementById("test").innerHTML += "<br /> debug: new array of length ";
+            document.getElementById("test").innerHTML += NumberOfProblems + "<br />";
+        }
+        for (var i=0; i<NumberOfProblems; i++) {
+            // random numbers in the range from MinimumValue to MaximumValue
+            xvals[i] = (Math.floor(Math.random() * (MaximumValue - MinimumValue + 1)) + parseInt(MinimumValue));
+            if (TopBigger === true) {
+                yvals[i] = (Math.floor(Math.random() * (xvals[i] - MinimumValue + 1)) + parseInt(MinimumValue));
+                if (Debug === true) {
+                    document.getElementById("test").innerHTML += "v";
+                }
+            } else {
+                // TopBigger === false; // pick any in-range random value
+                yvals[i] = (Math.floor(Math.random() * (MaximumValue - MinimumValue + 1)) + parseInt(MinimumValue));
+                if (Debug === true) {
+                    document.getElementById("test").innerHTML += "~";
+                }
+            }
+            if (Debug === true) {
+                document.getElementById("test").innerHTML += xvals[i] + "." + yvals[i];
+                document.getElementById("test").innerHTML += "(" + parseInt(i+1) + ")";
+            }
+        }
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br /> debug: end RandomSet";
+        }
+    }
+
+    var xvals = [];
+    var yvals = [];
+    RandomSet(); // the only call that works without parseInt
+
+    function NewSet() {
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br /> debug: NewSet";
+        }
+        xvals.length = 0;
+        yvals.length = 0;
+        RandomSet();
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br /> debug: end NewSet of numbers";
+        }
+    }
+
+    function randOrd() {
+        return (Math.round(Math.random()) - 0.5);
+    }
+
+    function Scramble() {
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br /> debug: Scramble the existing set of random numbers<br />";
+        }
+        xvals.sort(randOrd);
+        yvals.sort(randOrd);
+        if (Debug === true) {
+            for (var i=0; i<NumberOfProblems; i++) {
+                document.getElementById("test").innerHTML += xvals[i] + "," + yvals[i];
+                document.getElementById("test").innerHTML += "(" + parseInt(i+1) + ")";
+            }
+            document.getElementById("test").innerHTML += "<br /> debug: end Scramble";
+        }
+    }
+
+    function MakeTable(act) {
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br /> debug: MakeTable to " + act;
+        }
+        var tmp = '';
+        var str = '<div id="printable"> <p>Date/Time: <span id="datetime"></span> &nbsp;&nbsp;&nbsp;&nbsp;<span id="name">Name : Kush Talele</span></p>  </br><table border="1" width="80%" id="worksheet"><tr>';
+        i = 0;
+        while (i < NumberOfProblems) {
+            x = xvals[i];
+            y = yvals[i];
+            str += '<td align="left">';
+            str += '<br>&nbsp;'+x;
+            if (act == 'add') { str += ' + '+y; tmp = x+y; }
+            if (act == 'sub') { str += ' - '+y; tmp = x-y; }
+            if (act == 'mul') { str += ' * '+y; tmp = x*y; }
+            if (act == 'div') { str += ' / '+y; tmp = (x/y).toFixed(2); }
+            str += ' = ';
+            if (document.getElementById('answers').checked) { str += ''+tmp; }
+            else { str += '&nbsp;' }
+            str += '<br>&nbsp;</td>';
+            i++;
+            if ((i % ColumnsOnPage) == 0) { str += '</tr><tr>'; }
+        }
+        str += '</tr></table></div>';
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br /> debug: end MakeTable";
+        }
+        return str;
+    }
+    function printDiv() {
+        var divToPrint = document.getElementById('printable');
+        var htmlToPrint = '' +
+            '<style type="text/css">' +
+            'table th, table td {' +
+            'border:1px solid #000;' +
+            'padding:0.5em;' +
+            'font-size:large;' +
+            'font-family:Courier New;' +
+            '}' +
+            '</style>';
+        htmlToPrint += divToPrint.outerHTML;
+        newWin = window.open("");
+        newWin.document.write(htmlToPrint);
+        newWin.print();
+        newWin.close();
+    }
+
+    function GenerateWS() {
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br />debug: GenerateWS";
+        }
+        var x = 0
+        var y = 0
+        var str = '';
+        var sel = document.getElementById('MathAction').value;
+        switch (sel) {
+            case 'add' : str += MakeTable(sel); break;
+            case 'sub' : str += MakeTable(sel); break;
+            case 'mul' : str += MakeTable(sel); break;
+            case 'div' : str += MakeTable(sel); break;
+            default : alert('No choice selected'); break;
+        }
+        document.getElementById('TBL').innerHTML = str;
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = dt.toLocaleString();
+
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br />debug: end GenerateWS for " + sel;
+        }
+    }
+
+    function NewConfig() {
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br />debug: starting NewConfig with this [";
+            document.getElementById("test").innerHTML += NumberOfProblems + " " + ColumnsOnPage + " ";
+            document.getElementById("test").innerHTML += MinimumValue + " " + MaximumValue + " ";
+            document.getElementById("test").innerHTML += TopBigger + " " + MathAction.value;
+            document.getElementById("test").innerHTML += "] configuration";
+        }
+
+        NumberOfProblems = document.getElementById("NumProb").value;
+        ColumnsOnPage = document.getElementById("ColPage").value;
+        MinimumValue = document.getElementById("MinVal").value;
+        MaximumValue = document.getElementById("MaxVal").value;
+        TopBigger = document.getElementById("ReMax").checked;
+
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br />debug: finished NewConfig with this [";
+            document.getElementById("test").innerHTML += NumberOfProblems + " " + ColumnsOnPage + " ";
+            document.getElementById("test").innerHTML += MinimumValue + " " + MaximumValue + " ";
+            document.getElementById("test").innerHTML += TopBigger + " " + MathAction.value;
+            document.getElementById("test").innerHTML += "] configuration";
+        }
+    }
+
+    function ShowConfig() {
+        document.getElementById("NumProb").value = NumberOfProblems;
+        document.getElementById("ColPage").value = ColumnsOnPage;
+        document.getElementById("MinVal").value = MinimumValue;
+        document.getElementById("MaxVal").value = MaximumValue;
+        document.getElementById("ReMax").value = TopBigger;
+
+        if (Debug === true) {
+            document.getElementById("test").innerHTML += "<br />debug: ran ShowConfig for this [";
+            document.getElementById("test").innerHTML += NumberOfProblems + " " + ColumnsOnPage + " ";
+            document.getElementById("test").innerHTML += MinimumValue + " " + MaximumValue + " ";
+            document.getElementById("test").innerHTML += TopBigger + " " + MathAction.value;
+            document.getElementById("test").innerHTML += "] configuration";
+        }
+    }
+
+    function ClearDebugMessages() {
+        document.getElementById("test").innerHTML = "<br /> debug messages cleared";
+    }
+
+    if (Debug === true) {
+        document.getElementById("test").innerHTML += "<br />debug: default page load complete";
+        document.getElementById("test").innerHTML += "<br />debug: subsequent messages are triggered by user action<br />";
+    }
+
+
+</script>
+</body>
+</html>
