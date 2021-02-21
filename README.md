@@ -2,7 +2,7 @@
 # ptalele.github.io
 
 Personal Website and profile
-Run below command to deploy 
+Run below command to install gh-pages module and  deploy 
 ```
 npm install gh-pages --save-dev
 npm run deploy 

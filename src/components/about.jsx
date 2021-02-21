@@ -13,7 +13,7 @@ export default class About extends Component {
                     <div className="about-desc">
                     <span className="heading-meta">About Us</span>
                     <h2 className="colorlib-heading">Who Am I?</h2>
-                    <p>I am a Principal Engineer with 15 years experience of developing highly scalable Banking and financial products, computer grad from Pune University with IT as my major.I love exploring new technologies and often amazed by the progress we as a human species have mad so far in the recent years (apart from the headphone-jack part!!)</p>
+                    <p>I am a Engineer by nature, Manager by role and Leader by qualities. With 17+ years of experience in developing highly scalable Banking and financial products, computer grad from Pune University with IT as my major.I love exploring new technologies and often amazed by the progress we as a human species have mad so far in the recent years (apart from the headphone-jack part!!)</p>
                     <p>I have started reflecting my ideas and thoughts through the medium of code (That's the language developers from all over the world understand :P ).</p>
                     </div>
                 </div>
@@ -38,8 +38,21 @@ export default class About extends Component {
                 </span>
                 <div className="desc">
                     <h3>Web Development </h3>
-                    <p>I have experience building websites and API using Python, Java, JavaScript,React,HTML 5.
-                       Knowledge of Micro frontend, Content management, Search engine optimization, Responsive design.
+                    <p>I have experience of building websites and API using Python, Java, JavaScript,React and HTML 5.
+                       Knowledge of Micro frontend, Content management, Search engine optimization and Responsive design.
+                    </p>
+                </div>
+                </div>
+            </div>
+            <div className="col-md-4 text-center animate-box">
+                <div className="services color-2">
+                <span className="icon">
+                    <i className="icon-paperplane" />
+                </span>
+                <div className="desc">
+                    <h3>Digital Transformation </h3>
+                    <p>Experienced in integration of digital technology into all areas of a business, fundamentally changing how leagacy business model operate and deliver value to customer.  
+                    Expert in identifying Extreme Automation and operational excellence opportunities to reduce IT cost.
                     </p>
                 </div>
                 </div>
@@ -57,7 +70,7 @@ export default class About extends Component {
                 </div>
             </div>
             <div className="col-md-4 text-center animate-box">
-                <div className="services color-5">
+                <div className="services color-4">
                 <span className="icon">
                     <i className="icon-layers2" />
                 </span>
@@ -83,7 +96,7 @@ export default class About extends Component {
                 </div>
             </div>*/}
             <div className="col-md-4 text-center animate-box">
-                <div className="services color-4">
+                <div className="services color-5">
                 <span className="icon">
                     <i className="icon-chart-pie" />
                 </span>
@@ -105,8 +118,9 @@ export default class About extends Component {
                 <div className="desc">
                     <h3>Certifications</h3>
                     <p> Certified Project management professional.
-                        Certified Spring professional developer.
-                        Certified Web Component Developer.
+                        Certified in Extreme Programming
+                        Certified Digital Transformation Specialist
+                        Certified Spring Professional Developer.
                         AWS Certified Associate Developer.
                     </p>
                 </div>
