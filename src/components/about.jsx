@@ -32,18 +32,21 @@ export default class About extends Component {
             </div>
             <div className="row row-pt-md">
             <div className="col-md-4 text-center animate-box">
-                <div className="services color-1">
+                <div className="services color-5">
                 <span className="icon">
-                    <i className="icon-bulb" />
+                    <i className="icon-chart-pie" />
                 </span>
                 <div className="desc">
-                    <h3>Web Development </h3>
-                    <p>I have experience of building websites and API using Python, Java, JavaScript,React and HTML 5.
-                       Knowledge of Micro frontend, Content management, Search engine optimization and Responsive design.
+                    <h3>Project Management</h3>
+                    <p>Manage design, development and delivery of 6 platform products.
+                    Experience of vendor and resource management.
+                    Excellent negotiation, conflict resolutions and Risk management skills.
+                        Certified Project management professional.
                     </p>
                 </div>
                 </div>
             </div>
+           
             <div className="col-md-4 text-center animate-box">
                 <div className="services color-2">
                 <span className="icon">
@@ -51,7 +54,7 @@ export default class About extends Component {
                 </span>
                 <div className="desc">
                     <h3>Digital Transformation </h3>
-                    <p>Experienced in integration of digital technology into all areas of a business, fundamentally changing how leagacy business model operate and deliver value to customer.  
+                    <p>Experienced in integration of digital technology into all areas of a business, fundamentally changing how leagacy business model operate and deliver value to customer.
                     Expert in identifying Extreme Automation and operational excellence opportunities to reduce IT cost.
                     </p>
                 </div>
@@ -69,6 +72,21 @@ export default class About extends Component {
                 </div>
                 </div>
             </div>
+            </div>
+            <div className="row row-pt-md">
+            <div className="col-md-4 text-center animate-box">
+                <div className="services color-1">
+                <span className="icon">
+                    <i className="icon-bulb" />
+                </span>
+                <div className="desc">
+                    <h3>Web Development </h3>
+                    <p>I have experience of building websites and API using Python, Java, JavaScript,React and HTML 5.
+                       Knowledge of Micro frontend, Content management, Search engine optimization and Responsive design.
+                    </p>
+                </div>
+                </div>
+            </div>
             <div className="col-md-4 text-center animate-box">
                 <div className="services color-4">
                 <span className="icon">
@@ -79,33 +97,6 @@ export default class About extends Component {
                     <p>Lead Principal Engineer of Web Platform team at Discover Financial Services.
                     Developing applications on PCF, AWS and Open shift platform using Jenkins, Docker, K8s.
                     Experience of 12 factor cloud-native design.
-                    </p>
-                </div>
-                </div>
-            </div>
-
-                {/*<div className="col-md-4 text-center animate-box">
-                <div className="services color-2">
-                <span className="icon">
-                    <i className="icon-data" />
-                </span>
-                <div className="desc">
-                    <h3>Dev Ops</h3>
-                    <p>Jenkins , Kubernetes , Docker </p>
-                </div>
-                </div>
-            </div>*/}
-            <div className="col-md-4 text-center animate-box">
-                <div className="services color-5">
-                <span className="icon">
-                    <i className="icon-chart-pie" />
-                </span>
-                <div className="desc">
-                    <h3>Project Management</h3>
-                    <p>Manage design, development and delivery of 6 platform products.
-                    Experience of vendor and resource management.
-                    Excellent negotiation, conflict resolutions and Risk management skills.
-                        Certified Project management professional.
                     </p>
                 </div>
                 </div>
