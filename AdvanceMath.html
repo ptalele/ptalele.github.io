@@ -1,0 +1,628 @@
+<html lang="en-US">
+    <head><meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title>Talele Math Problem Generator</title>
+        <style>
+            @media print {
+                body * {
+                    visibility: hidden;
+                }
+                #TBL, #TBL * {
+                    visibility: visible;
+                }
+                #TBL, #worksheet {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 90%;
+                    height: 100%;
+                }
+                table, th, td {
+                    border: 1px;
+                }
+            }
+        </style>
+        <script>
+            var spaces = 5; //line breaks between problems, is used in ' "<br/>".repeat(spaces) ' to insert that many line breaks, unsure how to use in second omode.
+            var probs = 45;// how many problems to generate
+            var probsPerLine = 3;
+            var sameDen = false; //fraction prblems use same denminator inputs
+            var simpAft = true; //simplify answer after fraction problem
+            var PNM = 0; //Problem Number Mode, the way of outputing the problem number 1 is 'i+". "'. 2 is '"("+i+") "'
+            var numDirec = 0; //Direction of numbering for problems. 0 is horizontal and 1 is verticle.
+
+            function rNum(i){// attempt to number problems horizontaly with more than one row of questions.
+                var rows = Math.ceil(probs/probsPerLine);//currently does not work
+                var x = i % rows;
+                var y = i % probsPerLine; //starts at top of page
+                if(numDirec==0){
+                var newI = x + y*rows;
+                }
+                if(numDirec==1){
+                var newI = x*probsPerLine + y + function(){if(y==0);return 1;};
+                }
+                return newI;
+            }
+            function out(i){
+                i = rNum(i);//creates numbering system, either .1 xxx or (1) xxx
+                if(PNM==0){//plan to implement lettering for problems
+                    return i + ". ";
+                }
+                if(PNM==1){
+                    return  i + " => ";
+                }
+            }
+            function random(digits){ //creates a random number with as many digits as requested, does not return one to prevent overeasy problems.
+                if(digits!=0){
+                    var x = Math.floor(Math.random(1) * ("9".repeat(digits)))+1;
+                    if(getLen(x) == digits){
+                        if(x == 1){
+                            return random(digits); //if output is one call function again, not best way but works pretty well.
+                        }
+                        else{
+                            return x;
+                        }
+                    }
+                    else{        
+                        return random(digits); //if output is wrong number of digits call this function again.
+                    }
+                }
+                else{
+                    return 0;
+                }
+            }
+            function getLen(number) { //simple function to get the length in digits of a number.
+                return number.toString().length;
+            }
+            var countDecimals = function (value) {  //same as above but counts decimal digits, got this on code stackoverflow 
+                if ((value % 1) != 0)
+                    return value.toString().split(".")[1].length;  
+                return 0;
+            };
+            function reduce(numerator,denominator){ //for reducing fractions, I got this code online and I have no idea how it works.
+                var gcd = function gcd(a,b){
+                    return b ? gcd(b, a%b) : a;
+                };
+                gcd = gcd(numerator,denominator);
+                return [numerator/gcd, denominator/gcd];
+            }
+            function division(decimals){
+                var str = '<div id="printable"> <p>Date/Time: <span id="datetime"></span> &nbsp;&nbsp;&nbsp;&nbsp;<span id="name">Name : Kush Talele</span></p>  </br><table border="1" width="80%" id="worksheet"><tr>';
+                for(var i = 1; i<=probs; i++){
+                    var r1 = 3;
+                    var r2 = 2;
+                    var d = 0;
+                    if(decimals==1){r1=2;r2=1;d=0;}
+                    if(decimals==2){r1=3;r2=1;d=0;}
+                    if(decimals==3){r1=4;r2=1;d=0;}
+                    if(decimals==4){r1=3;r2=2;d=0;}
+                    if(decimals==5){r1=4;r2=2;d=0;}
+                    var n2 = random(r2);
+                    var n1 = random(r1);
+                    var a = n1 / n2;
+                    if(countDecimals(a) == d){
+                        str += '<td align="left">';
+                        str += '<br>&nbsp;';
+                        str +=n1.toLocaleString() +' ÷ ' + n2;
+                        str += ' = ';
+                        if (document.getElementById('answers').checked) { str += '<span class="answer" id="answer" >'+ a +'</span>'; }
+                        else { str += '<span class="answer" id="answer" style="visibility: hidden">'+ a +'</span>';  }
+                        str += '<br>&nbsp;</td>';
+                        if ((i % probsPerLine) == 0) { str += '</tr><tr>'; }
+                    }
+                    else{
+                        i = i - 1;
+                    }
+
+                }
+
+                str += '</tr></table></div>';
+                document.getElementById("outputs").innerHTML +=str;
+                var dt = new Date();
+                document.getElementById("datetime").innerHTML = dt.toLocaleString();
+            }
+            function addFractions(){
+                var str = '<div id="printable"> <p>Date/Time: <span id="datetime"></span> &nbsp;&nbsp;&nbsp;&nbsp;<span id="name">Name : Kush Talele</span></p>  </br><table border="1" width="80%" id="worksheet"><tr>';
+
+                for(var i = 1; i<=probs; i++){
+                    var n1 = random(1);
+                    var n2 = random(1);
+                    var n3 = random(1);
+                    if (sameDen == true){var n4 = n2;}
+                    else {var n4 = random(1);}
+                    while(n1 == n2){
+                        var n1 = random(1);
+                        var n2 = random(1);
+                        if (sameDen == true){var n4 = n2;}
+                    }
+                    while(n3 == n4){
+                        var n3 = random(1);
+                        var n4 = random(1);
+                        if (sameDen == true){var n4 = n2;}
+                    }
+                    var m1 = n1 * n4;
+                    var m2 = n2 * n4;
+                    var m3 = n3 * n2;
+                    var m4 = n4 * n2;
+                    var f1 = m1 + m3;
+                    var f2 = m2;
+                    var a = reduce(f1,f2);
+                    var a2 = a[0] + "/" + a[1];
+
+                    str += '<td align="left">';
+                    str += '<br>&nbsp;';
+                    str +=n1 + "/" + n2 + " + " + n3 + "/" + n4 + " =  "
+                    if (document.getElementById('answers').checked) { str += '<span class="answer" id="answer" >'+ a2 +'</span>'; }
+                    else { str += '&nbsp;' }
+                    str += '<br>&nbsp;</td>';
+                    if ((i % probsPerLine) == 0) { str += '</tr><tr>'; }
+
+                }
+                str += '</tr></table></div>';
+                document.getElementById("outputs").innerHTML +=str;
+                var dt = new Date();
+                document.getElementById("datetime").innerHTML = dt.toLocaleString();
+            }
+            function subFractions(){
+                var str = '<div id="printable"> <p>Date/Time: <span id="datetime"></span> &nbsp;&nbsp;&nbsp;&nbsp;<span id="name">Name : Kush Talele</span></p>  </br><table border="1" width="80%" id="worksheet"><tr>';
+                for(var i = 1; i<=probs; i++){
+                    var n1 = random(1);
+                    var n2 = random(1);
+                    var n3 = random(1);
+                    var n4 = random(1);
+                    if (sameDen == true){var n4 = n2;}
+                    while(n1 == n2){
+                        var n1 = random(1);
+                        var n2 = random(1);
+                        if (sameDen == true){var n4 = n2;}
+                    }
+                    while(n3 == n4){
+                        var n3 = random(1);
+                        var n4 = random(1);
+                        if (sameDen == true){var n4 = n2;}
+                    }
+                    var m1 = n1 * n4;
+                    var m2 = n2 * n4;
+                    var m3 = n3 * n2;
+                    var m4 = n4 * n2;
+                    var f1 = m1 - m3;
+                    var f2 = m2;
+                    var a = reduce(f1,f2);
+                    var a2 = a[0] + "/" + a[1];
+                    if(a[0]/a[1] > 0){
+                        str += '<td align="left">';
+                        str += '<br>&nbsp;';
+                        str +=n1 + "/" + n2 + " - " + n3 + "/" + n4 + " =  "
+                        if (document.getElementById('answers').checked) { str += '<span class="answer" id="answer" >'+ a2 +'</span>'; }
+                        else { str += '&nbsp;' }
+                        str += '<br>&nbsp;</td>';
+                        if ((i % probsPerLine) == 0) { str += '</tr><tr>'; }
+                    }
+                    else{
+                        i = i-1;
+                    }
+                }
+                str += '</tr></table></div>';
+                document.getElementById("outputs").innerHTML +=str;
+                var dt = new Date();
+                document.getElementById("datetime").innerHTML = dt.toLocaleString();
+            }
+            function simpFractions(){
+                var str = '<div id="printable"> <p>Date/Time: <span id="datetime"></span> &nbsp;&nbsp;&nbsp;&nbsp;<span id="name">Name : Kush Talele</span></p>  </br><table border="1" width="80%" id="worksheet"><tr>';
+                for(var i = 1; i<=probs; i++){
+                    var n1 = random(1);
+                    var n2 = random(1);
+                    var n1 = n1*random(1);
+                    var n2 = n2*random(1);
+                    var a = reduce(n1,n2);
+                    var a2 = a[0] + "/" + a[1];
+                    if(a[0]/a[1] > 0 && a[1] != n2){
+
+                        str += '<td align="left">';
+                        str += '<br>&nbsp;';
+                        str +=n1 + "/" + n2 + " =  "
+                        if (document.getElementById('answers').checked) { str += '<span class="answer" id="answer" >'+ a2 +'</span>'; }
+                        else { str += '&nbsp;' }
+                        str += '<br>&nbsp;</td>';
+                        if ((i % probsPerLine) == 0) { str += '</tr><tr>'; }
+                    }
+                    else{
+                        i = i-1;
+                    }
+                }
+                str += '</tr></table></div>';
+                document.getElementById("outputs").innerHTML +=str;
+                var dt = new Date();
+                document.getElementById("datetime").innerHTML = dt.toLocaleString();
+            }
+            function multFractions(){
+                var str = '<div id="printable"> <p>Date/Time: <span id="datetime"></span> &nbsp;&nbsp;&nbsp;&nbsp;<span id="name">Name : Kush Talele</span></p>  </br><table border="1" width="80%" id="worksheet"><tr>';
+                for(var i = 1; i<=probs; i++){
+                    var n1 = random(1);
+                    var n2 = random(1);
+                    var n3 = random(1);
+                    var n4 = random(1);
+                    if (sameDen == true){var n4 = n2;}
+                    var m1 = n1 * n3;
+                    var m2 = n2 * n4;
+                    if(simpAft == true){var a = reduce(m1,m2);}
+                    else{var a = [m1,m2];}
+                    if(a[0]/a[1] > 0){
+                        str += '<td align="left">';
+                        str += '<br>&nbsp;';
+                        str +=n1 + "/" + n2 + " × " + n3 + "/" + n4 + " =  "
+                        if (document.getElementById('answers').checked) { str += '<span class="answer" id="answer" >'+ a[0] + "/" + a[1] +'</span>'; }
+                        else { str += '&nbsp;' }
+                        str += '<br>&nbsp;</td>';
+                        if ((i % probsPerLine) == 0) { str += '</tr><tr>'; }
+                    }
+                    else{
+                        i = i-1;
+                    }
+                }
+                str += '</tr></table></div>';
+                document.getElementById("outputs").innerHTML +=str;
+                var dt = new Date();
+                document.getElementById("datetime").innerHTML = dt.toLocaleString();
+            }
+            function multiplication(digits){
+                var str = '<div id="printable"> <p>Date/Time: <span id="datetime"></span> &nbsp;&nbsp;&nbsp;&nbsp;<span id="name">Name : Kush Talele</span></p>  </br><table border="1" width="80%" id="worksheet"><tr>';
+                for(var i = 1; i<=probs; i++){
+                    var n1 = random(Math.ceil(digits/2));
+                    var n2 = random(Math.floor(digits/2));
+                    var a = n1 * n2;
+
+                    str += '<td align="left">';
+                    str += '<br>&nbsp;';
+                    str +=n1.toLocaleString() +' * ' + n2;
+                    str += ' = ';
+                    if (document.getElementById('answers').checked) { str += '<span class="answer" id="answer" >'+ a +'</span>'; }
+                    else { str += '&nbsp;' }
+                    str += '<br>&nbsp;</td>';
+
+                    if ((i % probsPerLine) == 0) { str += '</tr><tr>'; }
+                }
+                str += '</tr></table></div>';
+                document.getElementById("outputs").innerHTML +=str;
+                var dt = new Date();
+                document.getElementById("datetime").innerHTML = dt.toLocaleString();
+            }   
+            function Square(digits){
+                var str = '<div id="printable"> <p>Date/Time: <span id="datetime"></span> &nbsp;&nbsp;&nbsp;&nbsp;<span id="name">Name : Kush Talele</span></p>  </br><table border="1" width="80%" id="worksheet"><tr>';
+
+                for(var i = 1; i<=probs; i++){
+                    var n = random(digits);
+                    var a = n * n;
+                    str += '<td align="left">';
+                    str += '<br>&nbsp;';
+                    str +=n.toLocaleString() +' * ' + n + ' = ';
+                    if (document.getElementById('answers').checked) { str += '<span class="answer" id="answer" >'+ a +'</span>'; }
+                    else { str += '&nbsp;' }
+                    str += '<br>&nbsp;</td>';
+
+                    if ((i % probsPerLine) == 0) { str += '</tr><tr>'; }
+                }
+                str += '</tr></table></div>';
+                document.getElementById("outputs").innerHTML +=str;
+                var dt = new Date();
+                document.getElementById("datetime").innerHTML = dt.toLocaleString();
+            }   
+            function SQRT(digits){
+                var str = '<div id="printable"> <p>Date/Time: <span id="datetime"></span> &nbsp;&nbsp;&nbsp;&nbsp;<span id="name">Name : Kush Talele</span></p>  </br><table border="1" width="80%" id="worksheet"><tr>';
+
+                for(var i = 1; i<=probs; i++){
+                    var a = random(digits);
+                    var n = a * a;
+
+                    str += '<td align="left">';
+                    str += '<br>&nbsp;';
+                    str += '&check;<span style="text-decoration: overline">' + n.toLocaleString() + '</span> = ';
+                        if (document.getElementById('answers').checked) { str += '<span class="answer" id="answer" >'+ a +'</span>'; }
+                    else { str += '&nbsp;' }
+                    str += '<br>&nbsp;</td>';
+
+                    if ((i % probsPerLine) == 0) { str += '</tr><tr>'; }
+                }
+                str += '</tr></table></div>';
+                document.getElementById("outputs").innerHTML +=str;
+                var dt = new Date();
+                document.getElementById("datetime").innerHTML = dt.toLocaleString();
+            }
+
+            function createProblems(inp){
+                clearCols()
+                if(document.getElementById("option").value == "Division"){
+                    division(document.getElementById("digits").value);
+                }
+                if(document.getElementById("option").value == "Multiplication"){
+                    multiplication(document.getElementById("digits").value);
+                    var digits = document.getElementById("digits").value;
+                
+                }
+                if (document.getElementById("option").value == "Frac"){
+                    if(document.getElementById("optionFrac").value == "AddFractions"){
+                        addFractions();
+                    
+                    }
+                    if(document.getElementById("optionFrac").value == "SubFractions"){
+                        subFractions();
+                    
+                    }
+                    if(document.getElementById("optionFrac").value == "SimpFractions"){
+                        simpFractions();
+                    
+                    }
+                    if(document.getElementById("optionFrac").value == "MFRAC"){
+                        multFractions()
+                    
+                    }
+                }
+                if(document.getElementById("option").value == "SQRT"){
+                    SQRT(document.getElementById("digits").value);
+                }
+                if(document.getElementById("option").value == "SQR"){
+                    Square(document.getElementById("digits").value);
+                }
+            }
+            var answers = "";
+            function undoSameDen(){
+                document.getElementById("sameDenChanger").innerText = "False";
+                document.getElementById("sameDenChanger").onclick = doSameDen;
+                sameDen = false;
+            }
+            function doSameDen(){
+                document.getElementById("sameDenChanger").innerText = "True";
+                document.getElementById("sameDenChanger").onclick = undoSameDen;
+                sameDen = true;
+            }
+            function undoSimpAft(){
+                document.getElementById("simpAftChanger").innerText = "False";
+                document.getElementById("simpAftChanger").onclick = doSimpAft;
+                simpAft = false;
+            }
+            function doSimpAft(){
+                document.getElementById("simpAftChanger").innerText = "True";
+                document.getElementById("simpAftChanger").onclick = undoSimpAft;
+                simpAft = true;
+            }
+            function showAdvance(){
+                document.getElementById("overlay").style.display = "block";
+                document.getElementById("menu").style.display = "block";
+            }
+            function hideAdvance(){
+                document.getElementById("overlay").style.display = "none";
+                document.getElementById("menu").style.display = "none";
+            }
+            function changeFontSize(size){
+                if (size=="s"){
+                    document.getElementById("outputs").style.fontSize = "100%";
+                }
+                if (size=="m"){
+                    document.getElementById("outputs").style.fontSize = "150%";
+                }
+                if (size=="l"){
+                    document.getElementById("outputs").style.fontSize = "200%";
+                }
+            }
+
+            function clearCols(){
+                document.getElementById("outputs").innerHTML = '';
+            }
+            function changeMode(){
+                var changed = false;
+                document.getElementById("inputEasyLabel").style.visibility = "visible";
+                    document.getElementById("digits").style.visibility = "visible";
+
+                if (document.getElementById("option").value == "Division"){
+                    document.getElementById("inputEasyLabel").innerText = "Difficulty (1-5):";
+                    changed = true;
+                }
+                if (document.getElementById("option").value == "Multiplication"){
+                    document.getElementById("inputEasyLabel").innerText = "Problem digits:";
+                    changed = true;
+                }
+                if (document.getElementById("option").value == "SQRT"){
+                    document.getElementById("inputEasyLabel").innerText = "Digits of answer:";
+                    changed = true;
+                }
+                if (document.getElementById("option").value == "SQR"){
+                    document.getElementById("inputEasyLabel").innerText = "Digits of problem:";
+                    changed = true;
+                }
+                if (changed == false){
+                    document.getElementById("inputEasyLabel").style.visibility = "hidden";
+                    document.getElementById("digits").style.visibility = "hidden";
+                }
+                
+            }
+            function printDiv() {
+                var divToPrint = document.getElementById('printable');
+                var htmlToPrint = '' +
+                    '<style type="text/css">' +
+                    'table th, table td {' +
+                    'border:1px solid #000;' +
+                    'padding:0.5em;' +
+                    'font-size:medium;' +
+                    'font-family:Courier New;' +
+                    '}' +
+                    '</style>';
+                htmlToPrint += divToPrint.outerHTML;
+                newWin = window.open("");
+                newWin.document.write(htmlToPrint);
+                newWin.print();
+                newWin.close();
+            }
+            function onLoad(){
+                divisionMode();
+            }
+            function isNumber(inp){
+                var val = parseInt(inp.value);
+                var min = inp.min;
+                var max = inp.max;
+                if(inp.value != ""){
+                    if (Number.isInteger(val) == false){
+                        inp.value = min;
+                    }
+                    if (val > max){
+                        inp.value = max;
+                    }
+                    if (val < min){
+                        inp.value = min;
+                    }
+                    inp.value = Math.round(inp.value);
+                }
+                else{
+                    inp.value = "";
+                }
+            }
+            function fracView(){
+                if(document.getElementById("option").value == "Frac"){
+                    document.getElementById("optionFrac").style.visibility = "visible";
+                    document.getElementById("optionFrac").style.width = "auto";
+                }
+                else{
+                    document.getElementById("optionFrac").style.visibility = "hidden"; 
+                    document.getElementById("optionFrac").style.width = "0";                   
+                }
+            }
+            function toggleAnswer(showAnswer){
+                if (showAnswer.checked) {document.getElementById("answer").style.visibility = "visible"; }else{
+                    document.getElementById("answer").style.visibility = "hidden";
+                }
+            }
+        </script>
+        <style>
+            #answer2{
+                visibility: hidden;	    
+            }
+            #optionFrac{
+                visibility: hidden;
+                width: 0;	    
+            }
+            #output{
+                width: 120px;
+                float: left;
+            }
+            #outputx{
+                width: 120px;
+                float:left;
+            }
+            #output2{
+                float:right;
+                font-size: 100%;
+                width: 100px;
+            }
+            @media print{
+                #output{
+                    float: left;
+                }     
+                #output2{
+                    float:right;
+                }   
+                .noPrint{
+                    visibility: hidden;
+                }          
+            }
+            #overlay {
+                position: fixed;
+                display: none;
+                width: 100%;
+                height: 100%;
+                top: 0; 
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0,0,0,0.5);
+                z-index: 2;
+                cursor: pointer
+            }
+            #menu {
+                position: fixed; 
+                display: none;
+                width: 50%;
+                height: 50%;
+                top: 25%;
+                left: 25%;
+                right: 25%;
+                bottom: 25%;
+                background-color: rgba(255, 255, 255, 1);
+                z-index: 10; 
+                cursor: pointer;
+            }
+            .tooltip {
+                position: relative;
+                display: inline-block;
+                border-bottom: 1px dotted black;
+            }
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                padding: 5px 0;
+                border-radius: 6px;
+                position: absolute;
+                z-index: 1;
+            }
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+            }
+        </style>
+    </head>
+    <body>
+        <select id="option" class="noPrint" onchange="changeMode();fracView();">
+            <option value="Division">Division</option>
+            <option value="Multiplication">Multiplication</option>
+            <option value="SQRT">Square Root</option>
+            <option value="SQR">Squares</option>
+            <option value="Frac">Fraction</option>
+        </select>
+        <select id="optionFrac" class="noPrint">
+            <option value="AddFractions">Add Fractions</option>
+            <option value="SubFractions">Subtract Fractions</option>
+            <option value="SimpFractions">Simplify Fractions</option>
+            <option value="MFRAC">Multiply Fractions</option>
+            <option value="MFRAC">Divide Fractions</option>
+        </select>
+        <input type="button" onclick="createProblems(window);" value="Go" class="noPrint"/>
+        <span class="noPrint" id="inputEasyLabel">Difficulty (1-5):</span><input type="number" id="digits" onchange="isNumber(this);" class="noPrint" max="5" min="1" value="1"/></br>
+        <input type="button" onclick="printDiv();" value="Print" class="noPrint"/>
+        <input type="checkbox" id="answers" onchange="toggleAnswer(this);">Show Answers <br />
+        <input type="button" onclick="showAdvance();" id="SAButton" value="Show Advanced Menu" class="noPrint"/>
+        <div id="outputs">
+            <div id="output" class="output">
+            </div>
+        </div>
+        <div id="overlay"></div>
+        <div id="menu">
+            <div style="height: 20%; width: 35%; float: left;">
+                <table style="width:100%">
+                    <tr>
+                        <td>Font size:</td>
+                        <td>
+                            <select onchange="changeFontSize(this.value);" style="width: 75%;">
+                                <option value="s" style="font-size:100%">Small</option>
+                                <option value="m" style="font-size:150%">Medium</option>
+                                <option value="l" style="font-size:200%">Large</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Number of problems:</td>
+                        <td><input style="width: 75%;" onchange="isNumber(this);probs = this.value;" type="number" class="noPrint" max="50" min="5" value="45" /></td>
+                    </tr>
+                    <tr>
+                        <td>Problems per row:</td>
+                        <td><input style="width: 75%;" onchange="isNumber(this);probsPerLine = this.value;" type="number" class="noPrint" max="20" min="1" value="3" /></td>
+                    </tr>
+                </table>
+            </div>
+            <br/><div style="float: left; width: 50%;">
+                Fractions:<br/><br/>
+                <text title="Use the same denominator for fraction problems; means students do not have to convert fractions to same form.">Use same denominator:  </text><text onclick="doSameDen();" id="sameDenChanger">False</text><br/>
+                <text title="After doing fraction problems simplify answer; means students have to simplyfy their answers after solving the problem.">Simplify answer for fraction problems:  </text><text onclick="doSimpAft();" id="simpAftChanger">False</text>
+            </div><br/>
+            <input type="button" onclick="hideAdvance();" id="SAButton" value="Done" class="noPrint"/>
+        </div>
+    </body>
+</html>
