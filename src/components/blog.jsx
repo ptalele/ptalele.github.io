@@ -35,11 +35,11 @@ export default class Blog extends Component {
 					</div>
 					<div className="col-md-4 col-sm-6 animate-box" data-animate-effect="fadeInRight">
 					<div className="blog-entry">
-						<a href="https://medium.com/@prashant.talele/how-you-can-go-wrong-with-git-b7bdeeacb1ef" className="blog-img"><img src="images/blog-2.jpg" className="img-responsive" alt="Git Best practices" /></a>
+						<a href="https://prashant-talele.medium.com/effective-pair-programming-techniques-63904e4fa9e8" className="blog-img"><img src="images/pairprogramming.jpg" className="img-responsive" alt="Effective Pair Programming Techniques" /></a>
 						<div className="desc">
-							<span><small>Sept 24, 2018 </small> | <small> Github </small> | <small> <i className="icon-bubble3" /> 2</small></span>
-							<h3><a href="https://medium.com/@prashant.talele/how-you-can-go-wrong-with-git-b7bdeeacb1ef">How you can go wrong with git !!!</a></h3>
-							<p>Things to avoid while using git and also explain why you should avoid them.</p>
+							<span><small>Sept 24, 2018 </small> | <small> Effective Pair Programming Techniques </small> | <small> <i className="icon-bubble3" /> 2</small></span>
+							<h3><a href="https://prashant-talele.medium.com/effective-pair-programming-techniques-63904e4fa9e8">Effective Pair Programming Techniques</a></h3>
+							<p>Effective Pair Programming Techniques.</p>
 						</div>
 					</div>
 					</div>
