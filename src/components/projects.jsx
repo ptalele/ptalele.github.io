@@ -13,6 +13,7 @@ export default class Projects extends Component {
 							</div>
 						</div>
 						<div className="row">
+						<a href="https://github.com/ptalele/xlsstreamer">
 							<div className="col-md-4 animate-box" data-animate-effect="fadeInLeft">
 								<div className="project" style={{backgroundImage: 'url(images/img-1.jpg)'}}>
 									<div className="desc">
@@ -28,6 +29,8 @@ export default class Projects extends Component {
 									</div>
 								</div>
 							</div>
+							</a>
+							<a href="https://github.com/ptalele/Junit5Demo">
 							<div className="col-md-4 animate-box" data-animate-effect="fadeInRight">
 								<div className="project" style={{backgroundImage: 'url(images/img-2.jpg)'}}>
 									<div className="desc">
@@ -43,6 +46,8 @@ export default class Projects extends Component {
 									</div>
 								</div>
 							</div>
+							</a>
+							<a href="https://github.com/ptalele/PythonWithFlask">
 							<div className="col-md-4 animate-box" data-animate-effect="fadeInTop">
 								<div className="project" style={{backgroundImage: 'url(images/img-3.jpg)'}}>
 									<div className="desc">
@@ -58,6 +63,8 @@ export default class Projects extends Component {
 									</div>
 								</div>
 							</div>
+							</a>
+							<a href="https://github.com/ptalele/AngularWithBoot">
 							<div className="col-md-4 animate-box" data-animate-effect="fadeInBottom">
 								<div className="project" style={{backgroundImage: 'url(images/img-4.jpg)'}}>
 									<div className="desc">
@@ -73,6 +80,8 @@ export default class Projects extends Component {
 									</div>
 								</div>
 							</div>
+							</a>
+							<a href="https://github.com/ptalele/aws-lambda">
 							<div className="col-md-4 animate-box" data-animate-effect="fadeInLeft">
 								<div className="project" style={{backgroundImage: 'url(images/img-5.jpg)'}}>
 									<div className="desc">
@@ -88,6 +97,8 @@ export default class Projects extends Component {
 									</div>
 								</div>
 							</div>
+							</a>
+							<a href="https://github.com/ptalele/SpringbootCustomStarter">
 							<div className="col-md-4 animate-box" data-animate-effect="fadeInRight">
 								<div className="project" style={{backgroundImage: 'url(images/img-6.jpg)'}}>
 									<div className="desc">
@@ -103,6 +114,7 @@ export default class Projects extends Component {
 									</div>
 								</div>
 							</div>
+							</a>
 						</div>
 						<div className="row">
 							<div className="col-md-12 animate-box">

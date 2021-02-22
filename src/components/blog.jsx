@@ -13,12 +13,22 @@ export default class Blog extends Component {
 					</div>
 				</div>
 				<div className="row">
+				<div className="col-md-4 col-sm-6 animate-box" data-animate-effect="fadeInLeft">
+					<div className="blog-entry">
+						<a href="https://prashant-talele.medium.com/microservices-driven-architecture-d7e088df1727" className="blog-img"><img src="images/microservice.jpg" className="img-responsive" alt="Microservice Driven Architecture" /></a>
+						<div className="desc">
+							<span><small>Feb 21, 2020 </small> | <small> Microservice Driven Architecture</small> | <small> <i className="icon-bubble3" />1</small></span>
+							<h3><a href="https://prashant-talele.medium.com/microservices-driven-architecture-d7e088df1727">Microservice Driven Architecture</a></h3>
+							<p>Microservice Driven Architecture</p>
+						</div>
+					</div>
+					</div>
 					<div className="col-md-4 col-sm-6 animate-box" data-animate-effect="fadeInLeft">
 					<div className="blog-entry">
-						<a href="https://medium.com/@prashant.talele/how-to-blog-in-markdown-using-github-and-jekyll-736787daf53c" className="blog-img"><img src="images/blog-1.jpg" className="img-responsive" alt="Blog in Github and Jekyll" /></a>
+						<a href="https://prashant-talele.medium.com/jekyll-to-transform-simple-text-to-static-website-e2f3d6b17d88" className="blog-img"><img src="images/blog-1.jpg" className="img-responsive" alt="Blog in Github and Jekyll" /></a>
 						<div className="desc">
 							<span><small>April 14, 2018 </small> | <small> How to blog in markdown using Github and Jekyll ?</small> | <small> <i className="icon-bubble3" /> 4</small></span>
-							<h3><a href="https://medium.com/@prashant.talele/how-to-blog-in-markdown-using-github-and-jekyll-736787daf53c">How to blog in markdown using Github and Jekyll?</a></h3>
+							<h3><a href="https://prashant-talele.medium.com/jekyll-to-transform-simple-text-to-static-website-e2f3d6b17d88">How to blog in markdown using Github and Jekyll?</a></h3>
 							<p>Step by step guide for blog in markdown using Github and Jekyll.</p>
 						</div>
 					</div>

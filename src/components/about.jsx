@@ -13,7 +13,7 @@ export default class About extends Component {
                     <div className="about-desc">
                     <span className="heading-meta">About Us</span>
                     <h2 className="colorlib-heading">Who Am I?</h2>
-                    <p>I am a Engineer by nature, Manager by role and Leader by qualities. With 17+ years of experience in developing highly scalable Banking and financial products, computer grad from Pune University with IT as my major.I love exploring new technologies and often amazed by the progress we as a human species have mad so far in the recent years (apart from the headphone-jack part!!)</p>
+                    <p>I am a Engineer by nature, Manager by role and Leader by qualities. With 17+ years of experience in developing highly scalable Banking and financial products, computer grad from Pune University with Information Technology as my major. I love exploring new technologies and often amazed by the progress we as a human species have made so far in the recent years (apart from the headphone-jack part!!)</p>
                     <p>I have started reflecting my ideas and thoughts through the medium of code (That's the language developers from all over the world understand :P ).</p>
                     </div>
                 </div>
@@ -38,8 +38,9 @@ export default class About extends Component {
                 </span>
                 <div className="desc">
                     <h3>Project Management</h3>
-                    <p>Manage design, development and delivery of 6 platform products.
+                    <p>Manage design, development and delivery of financial products.
                     Experience of vendor and resource management.
+                    Manage software ownership and development from initial concept to cash through continuous improvement.
                     Excellent negotiation, conflict resolutions and Risk management skills.
                         Certified Project management professional.
                     </p>
@@ -56,6 +57,7 @@ export default class About extends Component {
                     <h3>Digital Transformation </h3>
                     <p>Experienced in integration of digital technology into all areas of a business, fundamentally changing how leagacy business model operate and deliver value to customer.
                     Expert in identifying Extreme Automation and operational excellence opportunities to reduce IT cost.
+                    Lead department transformation to product-oriented delivery model.
                     </p>
                 </div>
                 </div>
@@ -67,8 +69,8 @@ export default class About extends Component {
                 </span>
                 <div className="desc">
                     <h3>Application Modernization</h3>
-                    <p>I have experience of migrating large scale applications to Miro-service architecture, cloud native architecture design using
-                        extreme Programming(XP) and Test driven development(TDD)</p>
+                    <p>I have experience of migrating large scale applications to Domain driven design using Miro-service architecture, Cloud Native Principles,
+                        Extreme Programming(XP) and Test driven development(TDD). Accountable for delivering on the technology vision and roadmap for Products capabilities and product parity.</p>
                 </div>
                 </div>
             </div>
@@ -81,8 +83,9 @@ export default class About extends Component {
                 </span>
                 <div className="desc">
                     <h3>Web Development </h3>
-                    <p>I have experience of building websites and API using Python, Java, JavaScript,React and HTML 5.
+                    <p>I have experience of building websites and edge API using Python, Java, JavaScript,React and HTML 5.
                        Knowledge of Micro frontend, Content management, Search engine optimization and Responsive design.
+                       Understanding UI/UX standards and compliance regulations. 
                     </p>
                 </div>
                 </div>
@@ -94,7 +97,7 @@ export default class About extends Component {
                 </span>
                 <div className="desc">
                     <h3>Full Stack developer</h3>
-                    <p>Lead Principal Engineer of Web Platform team at Discover Financial Services.
+                    <p>Experienced in designing and delivering products using web stack, mobile stack, and native application stack.
                     Developing applications on PCF, AWS and Open shift platform using Jenkins, Docker, K8s.
                     Experience of 12 factor cloud-native design.
                     </p>
@@ -108,11 +111,11 @@ export default class About extends Component {
                 </span>
                 <div className="desc">
                     <h3>Certifications</h3>
-                    <p> Certified Project management professional.
-                        Certified in Extreme Programming
-                        Certified Digital Transformation Specialist
-                        Certified Spring Professional Developer.
-                        AWS Certified Associate Developer.
+                    <p align="left"> <li>Certified Project management professional.</li>
+                    <li>Certified in Extreme Programming Fundamentals</li>
+                    <li>Certified Digital Transformation Specialist from University of Virginia</li>
+                    <li>Certified Spring Professional Developer.</li>
+                    <li>AWS Certified Associate Developer.</li>
                     </p>
                 </div>
                 </div>
