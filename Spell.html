@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anisha SpellBee</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+     header {
+            /* Set the background properties */
+            background: url('https://img.freepik.com/free-photo/macro-shot-bumblebee-purple-flower_181624-37468.jpg?w=1800&t=st=1705258682~exp=1705259282~hmac=ac9f0bfd8352524287d204f5ea128a19c2b819d17f6e2380e7095bd641d44738') center/cover no-repeat;
+            
+            /* Set a height for the header to make the background visible */
+            height: 150px;
+            
+            /* Other styles for the header */
+            color: white; /* Text color */
+            text-align: right; /* Center text */
+            padding: 20px; /* Add padding for better visibility */
+        }
+
+        h1 {
+            margin: 0; /* Remove default margin for h1 */
+        }
+
+        nav {
+           /* background: url('https://img.freepik.com/free-photo/macro-shot-bumblebee-purple-flower_181624-37468.jpg?w=1800&t=st=1705258682~exp=1705259282~hmac=ac9f0bfd8352524287d204f5ea128a19c2b819d17f6e2380e7095bd641d44738') bottom/cover no-repeat; */
+            
+            display: flex;
+            justify-content: right;
+            margin-bottom: 20px;
+        }
+
+        /* Style the navigation links */
+        nav a {
+            text-decoration: none;
+            color: white;
+            position: relative;
+            font-weight: bold;
+            padding: 4px 16px;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        /* Add the 3D highlight effect on hover */
+        nav a:hover {
+            color: #ff5733; /* Highlight color */
+            transform: translateY(-3px);
+            cursor: grab; /* Change cursor on hover */
+        }
+
+          /* Change cursor on click */
+        nav a:active {
+            cursor: grabbing;
+        }
+
+       
+         #progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        #progress-bar-inner {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+        }
+        #question-container {
+            margin-bottom: 20px;
+        }
+         #answer-input {
+            margin-bottom: 20px;
+        }
+
+         #home-container {
+            /* Set the background image */
+            background-image: url('https://img.freepik.com/premium-vector/vector-slogan-t-shirt-letters-typography-design_642273-17.jpg?w=1060');
+            
+            /* Adjust background properties for styling */
+            background-size: contain; /* Cover the entire container */
+            background-position: bottom; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            
+            /* Set a height for the container to make the background visible */
+            height: 600px;
+            
+            /* Other styles for the container */
+            color: white; /* Text color */
+            text-align: center; /* Center text */
+            margin-top: 50px;
+            padding: 20px; /* Add padding for better visibility */
+        }
+
+        #your-list-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+         #test-buttons {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+         #test-buttons button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            width: 150px;
+        }
+
+         #result-message {
+            margin-top: 20px;
+        }
+
+        #summary {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #score {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #create-list-form {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+         #test-form {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #list-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #444;
+            border: 2px solid #00bcd4;
+            color: #fff;
+            z-index: 1000;
+        }
+
+        #summary {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: #4caf50;
+        }
+
+        .incorrect {
+            color: #f44336;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #555;
+        }
+
+        input, button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        input::placeholder {
+            color: #ccc;
+        }
+
+        #list-popup button {
+            background-color: #00bcd4;
+            margin-top: 10px;
+        }
+
+        /* Dark theme */
+        body.dark-theme {
+            background-color: #1f1f1f;
+            color: #ddd;
+        }
+
+        header.dark-theme {
+            color: #00bcd4;
+        }
+
+        nav a.dark-theme {
+            color: #00bcd4;
+        }
+
+        th.dark-theme {
+            background-color: #555;
+        }
+
+        #list-popup.dark-theme {
+            background-color: #444;
+            border: 2px solid #00bcd4;
+            color: #fff;
+        }
+         #test-form button {
+            background-color: #00bcd4;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+         
+        <h1>Anisha SpellBee</h1>
+    </header>
+
+    <nav>
+        <a onclick="showHome()">Home</a>
+        <a onclick="showYourList()">Spelling Lists</a>
+    </nav>
+
+    <div id="home-container">
+        <p><font color="black">Welcome Anisha !!!</font></p>
+    </div>
+
+    <div id="your-list-container">
+        <h2>Your Lists</h2>
+        <table>
+            <tr>
+                <th>List Name</th>
+                <th>Action</th>
+            </tr>
+            <tbody id="lists"></tbody>
+        </table>
+        <button onclick="showCreateListForm()">Create a List</button>
+    </div>
+
+    <div id="create-list-form">
+        <h2>Create a List</h2>
+        <label for="list-name-input">Enter list name: </label>
+        <input type="text" id="list-name-input" placeholder="e.g., MyList">
+        <br>
+        <label for="new-list-input">Enter spellings (space-separated): </label>
+        <input type="text" id="new-list-input" placeholder="e.g., apple banana cherry">
+        <button onclick="createList()">Create List</button>
+    </div>
+
+    <div id="list-popup">
+        <h2>List Content</h2>
+        <pre id="list-content"></pre>
+        <button onclick="closeListPopup()">Close</button>
+    </div>
+
+     <div id="test-form">
+        
+        <h2>Spelling Test</h2>
+         <div id="progress-bar">
+                <div id="progress-bar-inner"></div>
+        </div>
+        <div id="question-container"></div>
+        <input type="text" id="answer-input" placeholder="Type the spelling here" onkeypress="checkEnterKey(event)">
+        <div id="test-buttons">
+            <button onclick="checkAnswer()">Check</button>
+            <button onclick="speakSpelling()">Hear Again</button>
+        </div>
+        <p id="result-message"></p>
+        <div id="summary"></div>
+         <div id="score"></div>
+    </div>
+
+    <script>
+        let lists = [];
+        let currentListIndex;
+        let currentQuestionIndex;
+        let correctCount;
+
+        let totalQuestions = 10; // Set the number of questions
+
+         function updateProgressBar() {
+            const progress = (currentQuestionIndex / lists[currentListIndex].spellings.length) * 100;
+            document.getElementById("progress-bar-inner").style.width = `${progress}%`;
+        }
+
+        function updateScore() {
+            const totalQuestions = lists[currentListIndex].spellings.length;
+            const percentage = (correctCount / totalQuestions) * 100;
+            document.getElementById("score").textContent = `Score: ${percentage.toFixed(2)}%`;
+        }
+
+        function checkEnterKey(event) {
+        if (event.key === "Enter") {
+            checkAnswer();
+            speakSpelling();
+            setFocus();
+        }
+       
+    }
+
+     // Function to set focus on the answer-input element
+    function setFocus() {
+        document.getElementById("answer-input").focus();
+        
+    }
+
+     function disableFocus() {
+        document.getElementById("answer-input").disabled = true;
+    }
+
+        function startTest(listIndex) {
+            currentListIndex = listIndex;
+            currentQuestionIndex = 0;
+            correctCount = 0;
+            inCorrectCount = 0;
+            totalQuestions = lists[currentListIndex].spellings.length;
+            hideAllContainers();
+            document.getElementById("test-form").style.display = "flex";
+            hideSummary();
+            document.getElementById("answer-input").disabled = false;
+            setFocus();
+            askNextQuestion();
+
+        }
+
+        function askNextQuestion() {
+            if (currentQuestionIndex < totalQuestions) {
+                displayQuestion();
+               // displaySummary();
+            } else {
+                // Test is finished, display summary
+                disableFocus();
+                displaySummary();
+            }
+            updateProgressBar();
+        }
+
+        function displaySummary() {
+            const resultMessage = document.getElementById("result-message");
+            const summary = document.getElementById("summary");
+
+            resultMessage.textContent = `Test completed. Correct : ${correctCount} and Incorrect : ${inCorrectCount}.  Total % = ${correctCount} *100/${totalQuestions} %.`;
+            summary.textContent = `Summary: ${correctCount} out of ${totalQuestions} correct.`;
+
+            // Optionally: Add a button to restart the test
+            const restartButton = document.createElement("button");
+            restartButton.textContent = "Restart Test";
+            restartButton.onclick = () => startTest(currentListIndex);
+            summary.appendChild(restartButton);
+        }
+
+        function hideSummary() {
+            const resultMessage = document.getElementById("result-message");
+            const summary = document.getElementById("summary");
+            summary.textContent = '';
+            resultMessage.textContent = '';
+            document.getElementById("score").textContent ='';
+        }
+
+        function speakSpelling() {
+            const spellingToSpeak = lists[currentListIndex].spellings[currentQuestionIndex];
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(spellingToSpeak);
+
+            // Optional: Customize voice settings
+            // const voices = synth.getVoices();
+            // utterance.voice = voices[1]; // Change index according to your preferred voice
+            // utterance.rate = 1.2; // Adjust the speaking rate
+
+            synth.speak(utterance);
+        }
+        function showHome() {
+            hideAllContainers();
+            document.getElementById("home-container").style.display = "block";
+        }
+
+        function showCreateListForm() {
+            hideAllContainers();
+            document.getElementById("create-list-form").style.display = "flex";
+        }
+
+        function hideAllContainers() {
+            document.getElementById("home-container").style.display = "none";
+            document.getElementById("your-list-container").style.display = "none";
+            document.getElementById("create-list-form").style.display = "none";
+            document.getElementById("test-form").style.display = "none";
+        }
+
+        function displayLists() {
+                const listsContainer = document.getElementById("lists");
+                listsContainer.innerHTML = "";
+
+                for (let i = 0; i < lists.length; i++) {
+                    const listItem = document.createElement("tr");
+
+                    const listNameCell = document.createElement("td");
+                    listNameCell.textContent = lists[i].name;
+                    listItem.appendChild(listNameCell);
+
+                    const actionsCell = document.createElement("td");
+                    
+                    const takeTestBtn = document.createElement("button");
+                    takeTestBtn.textContent = "Take Test";
+                    takeTestBtn.onclick = () => startTest(i);
+                    actionsCell.appendChild(takeTestBtn);
+
+                    // Add space between buttons
+                    actionsCell.appendChild(document.createTextNode(" "));
+
+                    const showListBtn = document.createElement("button");
+                    showListBtn.textContent = "Show List";
+                    showListBtn.onclick = () => showListContent(i);
+                    actionsCell.appendChild(showListBtn);
+
+                    listItem.appendChild(actionsCell);
+
+                    listsContainer.appendChild(listItem);
+                }
+            }
+
+        function showListContent(listIndex) {
+            const listContent = lists[listIndex].spellings.join("\n");
+            document.getElementById("list-content").textContent = listContent;
+            document.getElementById("list-popup").style.display = "block";
+            document.addEventListener("keydown", closeListPopupOnEscape);
+        }
+
+        function closeListPopup() {
+            document.getElementById("list-popup").style.display = "none";
+            document.removeEventListener("keydown", closeListPopupOnEscape);
+        }
+
+        function closeListPopupOnEscape(event) {
+            if (event.key === "Escape") {
+                closeListPopup();
+            }
+        }
+
+        function createList() {
+            const newListNameInput = document.getElementById("list-name-input");
+            const newListInput = document.getElementById("new-list-input");
+
+            const newListName = newListNameInput.value.trim();
+            const newListSpelling = newListInput.value.trim();
+
+            if (newListName && newListSpelling) {
+                lists.push({ name: newListName, spellings: newListSpelling.split(/\s+/).filter(s => s.trim() !== "") });
+                newListNameInput.value = "";
+                newListInput.value = "";
+                showYourList();
+            } else {
+                alert("Please enter a list name and spellings.");
+            }
+        }
+
+     function displayQuestion() {
+            const questionContainer = document.getElementById("question-container");
+            const questionNumber = currentQuestionIndex + 1;
+            questionContainer.textContent = `Question ${questionNumber}: `;
+            speakSpelling();
+        }
+        function checkAnswer() {
+            const answerInput = document.getElementById("answer-input");
+            const resultMessage = document.getElementById("result-message");
+            const summary = document.getElementById("summary");
+
+            const userAnswer = answerInput.value.trim();
+            const correctAnswer = lists[currentListIndex].spellings[currentQuestionIndex].trim();
+
+            if (userAnswer === correctAnswer) {
+                resultMessage.textContent = "Correct!";
+                resultMessage.className = "correct";
+                correctCount++;
+            } else {
+                inCorrectCount++;
+                resultMessage.textContent = "Incorrect. The correct spelling is: " + lists[currentListIndex].spellings[currentQuestionIndex];
+                resultMessage.className = "incorrect";
+            }
+            
+            answerInput.value = "";
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < lists[currentListIndex].spellings.length) {
+                displayQuestion();
+                summary.textContent = `Summary: Correct : ${correctCount} and Incorrect : ${inCorrectCount} out of ${lists[currentListIndex].spellings.length}.`;
+            } else {
+                // Test is finished, display summary
+                resultMessage.textContent = `Test completed. ${correctCount} out of ${lists[currentListIndex].spellings.length} correct.`;
+                summary.textContent = `Summary: Total Questions : ${lists[currentListIndex].spellings.length}  Correct : ${correctCount} and Incorrect : ${inCorrectCount} .`;
+                updateScore();
+                disableFocus();
+            }
+             updateProgressBar();
+        }
+
+        // Dark theme toggle
+        function toggleDarkTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+
+        function showYourList() {
+            hideAllContainers();
+            document.getElementById("your-list-container").style.display = "flex";
+
+            // A = 68
+
+            // Check if the default list is already added
+            if (lists.length === 0) {
+                // Add default spelling list
+                lists.push({
+                    name: "UIL 2023 7th Grade list",
+                    spellings: ["abbreviation","abeyance","abolition","abstinence","abysmal","acceleration","accomplice","achievement","acquiesce","acrylic","adequacy","adjudicate","adolescent","aerospace","affirmative","affordable","aggregate","alabaster","alibi","alleviate","alpaca","altostratus","ambrosia","ameliorate","amorous","analogy","andante","annihilate","announcement","anorexia","antibacterial","antidote","apothecary","appearance","appendicitis","aquamarine","arboretum","archetype","aromatic","asbestos","asphyxiate","asthma","astringent","attentive","audacious","authenticate","authoritarian","automatically","axiom","backgammon","bacterium","bailiff","ballerina","Band-Aid","baneful","bankruptcy","barometric pressure","baroness","bashfulness","battalion","befuddlement","begrudgingly","beguile","behavior","belfry","benefactress","bequest","bestride","bewilderment","bibliography","bilateral","biochemistry","bipartisan","birthright","blankverse","blistering","blizzard","borax","bounteous","bourgeoisie","boysenberry","braggadocio","brainstorm","breadwinner","briar","briny","briquette","brogan","brotherliness","brusque","buccaneer","bullmastiff","bureaucratic","burgeon","bursitis","busybody","buttermilk","cacao","calamari","camaraderie","Canadian","capacity","cardigan","cataclysm","catalog,catalogue","categorical","Caucasian","census","centipede","centrifugal","changeable","charisma","chicory","chlorophyll","Christianity","circulation","circumscribe","classified","clavichord","coalesce","coalition","coequal","coherence","cohesion","Comanche","combustible","commemorative","commiserate","commodity","compelling","composition","concealment","conceited","confectioner","confirmation","confiscate","congratulate","conscientious","conspiracy","consumption","contentious","convalescent","convoy","copious","correspond","credentials","crescendo","crinoline","crouton","crustacean","cuisine","cyberspace","cylindrical","dalliance","Dalmatian","dataprocessing","deactivation","debilitate","decagon","deceitful","decibel","decorum","defeatism","defendant","deflation","dehumidify","delegation","deliverance","demagog","demitasse","democratize","denim","denomination","deplete","deplorable","deputize","dermatitis","despicable","despondency","detonation","development","diadem","digress","dilapidated","dirigible","disadvantage","discerning","dispossess","dissipate","distinguishable","ditty","docile","docudrama","doleful","Doppler radar","dormitory","drupe","duchess","earphone","ecclesiastical","ecliptic","effigy","egoism","electrification","electrode","elimination","elliptic","emaciate","embarrassment","embezzle","emblazon","emergency","emphatic","emulsify","enactment","endangerment","endorsement,","indorsement","engross","entanglement","enunciate","environmental","epilepsy","equestrian","equilibrium","eradicate","erroneous","especially","espousal","estuary","eucalyptus","evolutionist","excavation","exceedingly","excerpt","exclusiveness","exemption","exhilarate","experience","extortion","extract","extraterrestrial","extrovert","fabricate","face value","facial","faithfulness","falsification","familiarity","fascinating","faultfinder","feebleminded","felicitate","feminism","festivity","fiberglass","filament","finagle","firmament","flange","flautist","flotsam","fluency","fluky","flycatcher","follicle","fool'sgold","forbidding","forbode","forgery","formaldehyde","forsooth","fortunate","fourscore","fragmentary","franchise","fraudulent","free enterprise","friar","frightfully","frivolous","fructose","fugue","fulfillment","functional","fungicide","furtherance","futuristic","fuzziness","galavant","gamin","garnishment","garrison","gelatinous","Gemini","Genesis","genuine","geomagnetic","geriatrics","gherkin","ghostwrite","gigabyte","gingivitis","glandular","glassceiling","glazier","glorification","glower","goldenrod","gosling","gouge","governance","gradient","grammarian","grandiloquence","granulate","gratuity","greathearted","gregarious","grisly","grotesqueness","grudgingly","gubernatorial","Guernsey","guidebook","guillotine","guinea pig","guttural","gymnasium","hachure","hairbreadth","hallucinate","harbinger","harborage","harmfully","harrow","hassock","healthiness","heavyweight","hedgehog","heinous","heliotrope","heliport","hemstitch","henna","hereditary","heroically","hertz","heterogeneous","hexagonal","hibernate","high-definition","hindrance","hippopotamus","historically","hobbyhorse","Holocaust","homage","homeostasis","homespun","homogeneous","honeycomb","horsd'oeuvre","horticulture","hotchpotch","hovel","humanitarian","humidify","humus","huzzah,huzza","hyacinth","hydrogenous","hydrography","hyperbole","hypochondriac","hysteria","icehockey","ideogram","idiosyncrasy","idiotically","igneous","illustration","immersible","immunology","impassioned","impertinent","impervious","impossibility","inadmissible","incalculable","incapacitate","inclement","incompatibility","incompetent","inconvenient","incriminate","indecision","indeterminate","indicate","indispensable","indolent","indubitable","inertia","infantile","infirmary","infuriate","inheritance","innocuous","insignia","instructor","insubordinate","intercollegiate","interrogatory","intimidation","invasive","involuntary","irredeemable","irreversible","issuance","iteration","jackstraw","janitorial","January","jerkwater","jetsam","jitterbug","jockeying","jocose","jokester","jollification","journalism","joust","Judaism","jugglery","junction","junkmail","Jupiter","jurisdiction","juxtaposed","kaolin","kapok","carat","kerf","keynote","killdeer","kindred","kingship","kiva","kiwifruit","knavery","knockwurst","kookaburra","krypton","lackluster","lady-in-waiting","lagomorph","lamentable","lapel","larkspur","lassitude","laughably","lavatory","leastwise","leave-taking","legate","legibility","legionary","leisurely","lengthwise","leprechaun","lethargic","levitation","libertarian","license","lifeline","lightheartedness","limousine","lingerie","linguistics","liquidation","literary","lithology","liverwurst","loathing","locomotion","loganberry","loiter","long-distance","louse","low-spirited","ludicrous","lumbago","lunacy","lyceum","Lyme disease","macro","madrigal","magnesium","maize","maladjustment","malfeasance","malignant","malnourished","management","mandate","manifestation","manufacturer","marginalize","marionette","mascara","massacre","mastiff","mausoleum","maxillary","meagre","measurable","megahertz","melanin","melodramatic","membrane","memorabilia","meningitis","meringue","metamorphosis","metronome","mezzanine","microchip","microscopy","millennium","mimeograph","minivan","minstrel","miscalculate","misinterpret","mistletoe","moderation","momentarily","monosyllabic","monotonous","monumental","mortgage","motherboard","multidimensional","municipality","murkiness","murmur","myriad","naive","narcissus","narrator","nasturtium","Native American","nauseous","nebulous","necessarily","nefarious","neighborhood","neologism","nepotism","neutralism","newfangled","nickelodeon","nightclothes","ninetieth","nodule","nomadic","nominally","nonagon","noncombatant","nonempirical","nonetheless","nongovernmental","nonpartisan","nonviolence","Northwesterner","nosedive","notary public","noticeable","notwithstanding","nuance","nubble","nullification","nurturance","obdurate","obediently","obese","oblique","obsessive","obsolete","obstruction","Occidental","octagonal","ocular","odoriferous","ogre","Olympiad","omega","omnivorous","onyx","opaqueness","open-minded","oppression","opprobrious","optionally","orangutan","ordinariness","organic","origami","orphanage","orthographical","ostensible","ouster","outcast","outrigger","ovation","overrated","oversimplify","overwhelm","oxford","packsaddle","Paleocene","paleontology","palmistry","panhandle","papyrus","parabolic","paramedic","paranoia","parenthesis","parliamentarian","parsimony","participant","pastparticiple","pathogenic","patroon","peculiarity","pedicure","perceptible","perforate","periodical","perpetrate","personification","pervade","pessimistic","pestilent","philosophical","phooey","picturesque","pinafore","platitude","poignancy","polygon","populous","portfolio","possessive","practitioner","praiseworthy","precision","precocious","predominately","presumptuous","problematic","prodigy","pronunciation","prosecute","protagonist","provocative","psychoanalysis","pungency","pursue","quadrilateral","quagmire","quantum","quarterhorse","quasar","quenchable","querulous","quick-witted","quintuple","quitting","quivering","quotation mark","radicand","raillery","rampart","ransack","rationalize","ravenous","ravioli","receiver","recessional","reclamation","recommend","reconstruct","rectory","reenact","Reformation","refractory","regardless","regimen","regretfully","rehearse","relentless","relinquish","remission","rendezvous","repertoire","reprehend","repugnant","repulsive","rescind","researcher","respectively","restoration","retaliatory","reticence","revamp","rhetorical","rhymescheme","ricochet","riotous","roadrunner","Roman candle","rosette","roughshod","rowdiness","ruffian","Rugby","rutabaga","sagacious","sainthood","salamander","salaried","sanctimonious","sardonic","satisfactory","saurian","scholastic","sealevel","secede","seismology","self-incrimination","semblance","sentimental","serenity","sesquicentennial","seventh","shatterproof","silhouette","skiff","smithereens","sociologist","solvent","sonnet","soothsayer","sorority","spectacular","spherical","squeegee","staggering","statuette","stellar","stethoscope","stipulate","stranglehold","subconscious","subjective","subterranean","subversion","succotash","suffocate","suggestible","superfluous","superstition","suppression","surreptitious","susceptible","syllabus","symbolism","symposium","synchronous","systematic","tailor-made","tangential","tantalize","taxidermy","telecommute","telemarketer","temporarily","tenacity","tenderloin","terminate","textbook","theodolite","therapeutic","thousandth","three-dimensional","thwack","timidness","timorous","togetherness","tomfoolery","tormentor","torsion","tortoiseshell","traipse","transaction","transcontinental","transgression","transparent","trapezoid","travesty","treatise","trepidation","tripartite","triviality","trounce","truculent","tubercle","turbojet","turbulence","turret","tutelage","typewriter","typically","ubiquitous","ulcer","ultramarine","unaccustomed","unadulterated","unappeasable","uncivilized","unclassified","uncommitted","underestimate","uneasiness","unforgettable","ungracious","universal donor","unnecessarily","unsaturated","untutored","unwearied","upperclassman","urbanite","usage","utensil","Utopia","vagary","valorous","vandalism","vaporizer","vaudeville","vehemence","vellum","venerable","ventriloquism","venturesome","verbose","verifiable","vertigo","Vespers","vice versa","victimize","viewpoint","villainous","vindictive","vinyl","virulent","visitant","vivid","vociferous","voice mail","volatile","votive","vouchsafe","wampum","wasteland","watchfulness","welfare","whalebone","whodunit","wickiup","willy-nilly","wiseacre","withe","wizardry","workmanship","worthwhile","wristwatch","wrongheaded","xeric","x-intercept","yes-man","yore","Yorkshire terrier","zephyr","zeta","zloty","zooplankton","Zulu"]
+
+                
+                });
+
+                lists.push({
+                    name: "A",
+                    spellings: ["abbreviation","abeyance","abolition","abstinence","abysmal","acceleration","accomplice","achievement","acquiesce","acrylic","adequacy","adjudicate","adolescent","aerospace","affirmative","affordable","aggregate","alabaster","alibi","alleviate","alpaca","altostratus","ambrosia","ameliorate","amorous","analogy","andante","annihilate","announcement","anorexia","antibacterial","antidote","apothecary","appearance","appendicitis","aquamarine","arboretum","archetype","aromatic","asbestos","asphyxiate","asthma","astringent","attentive","audacious","authenticate","authoritarian","automatically","axiom"
+                        ]});
+
+                  lists.push({
+                    name: "B",
+                    spellings: ["backgammon","bacterium","bailiff","ballerina","Band-Aid","baneful","bankruptcy","barometric pressure","baroness","bashfulness","battalion","befuddlement","begrudgingly","beguile","behavior","belfry","benefactress","bequest","bestride","bewilderment","bibliography","bilateral","biochemistry","bipartisan","birthright","blankverse","blistering","blizzard","borax","bounteous","bourgeoisie","boysenberry","braggadocio","brainstorm","breadwinner","briar","briny","briquette","brogan","brotherliness","brusque","buccaneer","bullmastiff","bureaucratic","burgeon","bursitis","busybody","buttermilk"
+                        ]});
+
+                  lists.push({
+                    name: "C",
+                    spellings: ["cacao","calamari","camaraderie","Canadian","capacity","cardigan","cataclysm","catalog,catalogue","categorical","Caucasian","census","centipede","centrifugal","changeable","charisma","chicory","chlorophyll","Christianity","circulation","circumscribe","classified","clavichord","coalesce","coalition","coequal","coherence","cohesion","Comanche","combustible","commemorative","commiserate","commodity","compelling","composition","concealment","conceited","confectioner","confirmation","confiscate","congratulate","conscientious","conspiracy","consumption","contentious","convalescent","convoy","copious","correspond","credentials","crescendo","crinoline","crouton","crustacean","cuisine","cyberspace","cylindrical"
+                        ]});
+
+                  lists.push({
+                    name: "D",
+                    spellings: ["dalliance","Dalmatian","data processing","deactivation","debilitate","decagon","deceitful","decibel","decorum","defeatism","defendant","deflation","dehumidify","delegation","deliverance","demagog","demitasse","democratize","denim","denomination","deplete","deplorable","deputize","dermatitis","despicable","despondency","detonation","development","diadem","digress","dilapidated","dirigible","disadvantage","discerning","dispossess","dissipate","distinguishable","ditty","docile","docudrama","doleful","Doppler radar","dormitory","drupe","duchess"]});
+
+
+                  lists.push({
+                    name: "E",
+                    spellings: ["earphone","ecclesiastical","ecliptic","effigy","egoism","electrification","electrode","elimination","elliptic","emaciate","embarrassment","embezzle","emblazon","emergency","emphatic","emulsify","enactment","endangerment","endorsement,","indorsement","engross","entanglement","enunciate","environmental","epilepsy","equestrian","equilibrium","eradicate","erroneous","especially","espousal","estuary","eucalyptus","evolutionist","excavation","exceedingly","excerpt","exclusiveness","exemption","exhilarate","experience","extortion","extract","extraterrestrial","extrovert"]});
+
+
+                  lists.push({
+                    name: "F",
+                    spellings: ["fabricate","face value","facial","faithfulness","falsification","familiarity","fascinating","faultfinder","feebleminded","felicitate","feminism","festivity","fiberglass","filament","finagle","firmament","flange","flautist","flotsam","fluency","fluky","flycatcher","follicle","fool'sgold","forbidding","forbode","forgery","formaldehyde","forsooth","fortunate","fourscore","fragmentary","franchise","fraudulent","free enterprise","friar","frightfully","frivolous","fructose","fugue","fulfillment","functional","fungicide","furtherance","futuristic","fuzziness"]});
+
+                   lists.push({
+                    name: "G",
+                    spellings: ["galavant","gamin","garnishment","garrison","gelatinous","Gemini","Genesis","genuine","geomagnetic","geriatrics","gherkin","ghostwrite","gigabyte","gingivitis","glandular","glassceiling","glazier","glorification","glower","goldenrod","gosling","gouge","governance","gradient","grammarian","grandiloquence","granulate","gratuity","greathearted","gregarious","grisly","grotesqueness","grudgingly","gubernatorial","Guernsey","guidebook","guillotine","guinea pig","guttural","gymnasium"]});
+
+                    lists.push({
+                    name: "H",
+                    spellings: ["hachure","hairbreadth","hallucinate","harbinger","harborage","harmfully","harrow","hassock","healthiness","heavyweight","hedgehog","heinous","heliotrope","heliport","hemstitch","henna","hereditary","heroically","hertz","heterogeneous","hexagonal","hibernate","high-definition","hindrance","hippopotamus","historically","hobbyhorse","Holocaust","homage","homeostasis","homespun","homogeneous","honeycomb","horsd'oeuvre","horticulture","hotchpotch","hovel","humanitarian","humidify","humus","huzzah,huzza","hyacinth","hydrogenous","hydrography","hyperbole","hypochondriac","hysteria"]});
+
+
+                    lists.push({
+                    name: "I",
+                    spellings: ["icehockey","ideogram","idiosyncrasy","idiotically","igneous","illustration","immersible","immunology","impassioned","impertinent","impervious","impossibility","inadmissible","incalculable","incapacitate","inclement","incompatibility","incompetent","inconvenient","incriminate","indecision","indeterminate","indicate","indispensable","indolent","indubitable","inertia","infantile","infirmary","infuriate","inheritance","innocuous","insignia","instructor","insubordinate","intercollegiate","interrogatory","intimidation","invasive","involuntary","irredeemable","irreversible","issuance","iteration"]});
+
+
+
+                    lists.push({
+                    name: "J",
+                    spellings: ["jackstraw","janitorial","January","jerkwater","jetsam","jitterbug","jockeying","jocose","jokester","jollification","journalism","joust","Judaism","jugglery","junction","junkmail","Jupiter","jurisdiction","juxtaposed"]});
+
+
+
+                    lists.push({
+                    name: "K",
+                    spellings: ["kaolin","kapok","carat","kerf","keynote","killdeer","kindred","kingship","kiva","kiwifruit","knavery","knockwurst","kookaburra","krypton"]});
+
+
+                    lists.push({
+                    name: "L",
+                    spellings: ["lackluster","lady-in-waiting","lagomorph","lamentable","lapel","larkspur","lassitude","laughably","lavatory","leastwise","leave-taking","legate","legibility","legionary","leisurely","lengthwise","leprechaun","lethargic","levitation","libertarian","license","lifeline","lightheartedness","limousine","lingerie","linguistics","liquidation","literary","lithology","liverwurst","loathing","locomotion","loganberry","loiter","long-distance","louse","low-spirited","ludicrous","lumbago","lunacy","lyceum","Lyme disease"]});
+
+
+                    lists.push({
+                    name: "M",
+                    spellings: ["macro","madrigal","magnesium","maize","maladjustment","malfeasance","malignant","malnourished","management","mandate","manifestation","manufacturer","marginalize","marionette","mascara","massacre","mastiff","mausoleum","maxillary","meagre","measurable","megahertz","melanin","melodramatic","membrane","memorabilia","meningitis","meringue","metamorphosis","metronome","mezzanine","microchip","microscopy","millennium","mimeograph","minivan","minstrel","miscalculate","misinterpret","mistletoe","moderation","momentarily","monosyllabic","monotonous","monumental","mortgage","motherboard","multidimensional","municipality","murkiness","murmur","myriad"]});
+
+
+                    lists.push({
+                    name: "N",
+                    spellings: ["naive","narcissus","narrator","nasturtium","Native American","nauseous","nebulous","necessarily","nefarious","neighborhood","neologism","nepotism","neutralism","newfangled","nickelodeon","nightclothes","ninetieth","nodule","nomadic","nominally","nonagon","noncombatant","nonempirical","nonetheless","nongovernmental","nonpartisan","nonviolence","Northwesterner","nosedive","notary public","noticeable","notwithstanding","nuance","nubble","nullification","nurturance"]});
+
+
+                    lists.push({
+                    name: "O",
+                    spellings: ["obdurate","obediently","obese","oblique","obsessive","obsolete","obstruction","Occidental","octagonal","ocular","odoriferous","ogre","Olympiad","omega","omnivorous","onyx","opaqueness","open-minded","oppression","opprobrious","optionally","orangutan","ordinariness","organic","origami","orphanage","orthographical","ostensible","ouster","outcast","outrigger","ovation","overrated","oversimplify","overwhelm","oxford"]});
+
+                     lists.push({
+                    name: "P",
+                    spellings: ["packsaddle","Paleocene","paleontology","palmistry","panhandle","papyrus","parabolic","paramedic","paranoia","parenthesis","parliamentarian","parsimony","participant","pastparticiple","pathogenic","patroon","peculiarity","pedicure","perceptible","perforate","periodical","perpetrate","personification","pervade","pessimistic","pestilent","philosophical","phooey","picturesque","pinafore","platitude","poignancy","polygon","populous","portfolio","possessive","practitioner","praiseworthy","precision","precocious","predominately","presumptuous","problematic","prodigy","pronunciation","prosecute","protagonist","provocative","psychoanalysis","pungency","pursue"]});
+
+
+                      lists.push({
+                    name: "Q",
+                    spellings: ["quadrilateral","quagmire","quantum","quarterhorse","quasar","quenchable","querulous","quick-witted","quintuple","quitting","quivering","quotation mark"]});
+
+
+                       lists.push({
+                    name: "R",
+                    spellings: ["radicand","raillery","rampart","ransack","rationalize","ravenous","ravioli","receiver","recessional","reclamation","recommend","reconstruct","rectory","reenact","Reformation","refractory","regardless","regimen","regretfully","rehearse","relentless","relinquish","remission","rendezvous","repertoire","reprehend","repugnant","repulsive","rescind","researcher","respectively","restoration","retaliatory","reticence","revamp","rhetorical","rhymescheme","ricochet","riotous","roadrunner","Roman candle","rosette","roughshod","rowdiness","ruffian","Rugby","rutabaga"]});
+
+
+                        lists.push({
+                    name: "S",
+                    spellings: ["sagacious","sainthood","salamander","salaried","sanctimonious","sardonic","satisfactory","saurian","scholastic","sealevel","secede","seismology","self-incrimination","semblance","sentimental","serenity","sesquicentennial","seventh","shatterproof","silhouette","skiff","smithereens","sociologist","solvent","sonnet","soothsayer","sorority","spectacular","spherical","squeegee","staggering","statuette","stellar","stethoscope","stipulate","stranglehold","subconscious","subjective","subterranean","subversion","succotash","suffocate","suggestible","superfluous","superstition","suppression","surreptitious","susceptible","syllabus","symbolism","symposium","synchronous","systematic"]});
+
+
+                         lists.push({
+                    name: "T",
+                    spellings: ["tailor-made","tangential","tantalize","taxidermy","telecommute","telemarketer","temporarily","tenacity","tenderloin","terminate","textbook","theodolite","therapeutic","thousandth","three-dimensional","thwack","timidness","timorous","togetherness","tomfoolery","tormentor","torsion","tortoiseshell","traipse","transaction","transcontinental","transgression","transparent","trapezoid","travesty","treatise","trepidation","tripartite","triviality","trounce","truculent","tubercle","turbojet","turbulence","turret","tutelage","typewriter","typically"]});
+
+
+                     lists.push({
+                    name: "U",
+                    spellings: ["ubiquitous","ulcer","ultramarine","unaccustomed","unadulterated","unappeasable","uncivilized","unclassified","uncommitted","underestimate","uneasiness","unforgettable","ungracious","universal donor","unnecessarily","unsaturated","untutored","unwearied","upperclassman","urbanite","usage","utensil","Utopia"]});
+
+
+
+                lists.push({
+                    name: "V",
+                    spellings: ["vagary","valorous","vandalism","vaporizer","vaudeville","vehemence","vellum","venerable","ventriloquism","venturesome","verbose","verifiable","vertigo","Vespers","vice versa","victimize","viewpoint","villainous","vindictive","vinyl","virulent","visitant","vivid","vociferous","voice mail","volatile","votive","vouchsafe"]});
+
+
+                    lists.push({
+                    name: "W",
+                    spellings: ["wampum","wasteland","watchfulness","welfare","whalebone","whodunit","wickiup","willy-nilly","wiseacre","withe","wizardry","workmanship","worthwhile","wristwatch","wrongheaded"]});
+
+
+                    lists.push({
+                    name: "X",
+                    spellings: ["xeric","x-intercept"]});
+
+                     lists.push({
+                    name: "Y",
+                    spellings: ["yes-man","yore","Yorkshire terrier"]});
+
+
+                      lists.push({
+                    name: "Z",
+                    spellings: ["zephyr","zeta","zloty","zooplankton","Zulu"]});
+
+
+            }
+
+            displayLists();
+        }
+    </script>
+</body>
+</html>
