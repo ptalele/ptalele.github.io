@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prashant Talele — Engineering Leader Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --bg-elev: #11151f;
+      --bg-card: #141926;
+      --border: #232a3a;
+      --border-strong: #2f3850;
+      --text: #e6e9f0;
+      --text-muted: #97a0b5;
+      --text-dim: #6b7488;
+      --accent: #5b8cff;
+      --accent-2: #8b5bff;
+      --green: #3fd68c;
+      --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.65; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Top bar */
+    .actions {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(11, 14, 20, 0.92); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .actions .back { font-size: 14px; color: var(--text-muted); }
+    .actions .btns { display: flex; gap: 10px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      cursor: pointer; border: 1px solid transparent; transition: all 0.2s ease;
+    }
+    .btn--primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; border: none; }
+    .btn--ghost { background: transparent; border-color: var(--border-strong); color: var(--text); }
+    .btn--ghost:hover { border-color: var(--accent); }
+
+    /* Layout */
+    .wrap { max-width: 920px; margin: 0 auto; padding: 88px 28px 64px; }
+
+    /* Hero header */
+    .profile-hero { margin-bottom: 48px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
+    .profile-hero h1 { font-size: clamp(30px, 5vw, 44px); font-weight: 800; margin: 0 0 8px; letter-spacing: -0.02em; }
+    .profile-hero .tagline {
+      font-size: 19px; color: var(--text-muted); margin: 0 0 20px; max-width: 700px;
+    }
+    .profile-hero .contact-row {
+      display: flex; flex-wrap: wrap; gap: 18px; font-size: 14px; color: var(--text-dim);
+    }
+    .profile-hero .contact-row span { display: inline-flex; align-items: center; gap: 6px; }
+
+    /* Impact metrics */
+    .metrics {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      margin-bottom: 48px;
+    }
+    .metric {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px 18px; text-align: center;
+    }
+    .metric .num {
+      font-size: clamp(26px, 4vw, 36px); font-weight: 800; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .metric .lbl { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 6px; }
+
+    /* Section headings */
+    .sec-title {
+      font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--accent); font-weight: 700; margin: 0 0 20px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    }
+    section { margin-bottom: 44px; }
+
+    /* Experience cards */
+    .exp-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 28px; margin-bottom: 20px; transition: border-color 0.2s ease;
+    }
+    .exp-card:hover { border-color: var(--border-strong); }
+    .exp-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 4px; }
+    .exp-header h3 { font-size: 18px; font-weight: 700; margin: 0; }
+    .exp-period { font-size: 13px; color: var(--text-dim); font-weight: 500; }
+    .exp-company { font-size: 15px; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+    .exp-scale {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(63, 214, 140, 0.08); border: 1px solid rgba(63, 214, 140, 0.25);
+      border-radius: 6px; padding: 4px 10px; font-size: 12px; color: var(--green);
+      font-weight: 600; margin-bottom: 14px;
+    }
+    .exp-highlights { padding-left: 0; list-style: none; margin: 0; }
+    .exp-highlights li {
+      font-size: 14px; color: var(--text-muted); margin-bottom: 10px;
+      padding-left: 18px; position: relative;
+    }
+    .exp-highlights li::before {
+      content: "▹"; position: absolute; left: 0; color: var(--accent); font-size: 14px;
+    }
+    .exp-highlights strong { color: var(--text); font-weight: 600; }
+
+    /* Skills grid */
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .skill-pill {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px; text-align: center;
+      font-size: 13px; font-weight: 600; color: var(--text-muted);
+      transition: border-color 0.2s ease;
+    }
+    .skill-pill:hover { border-color: var(--accent); color: var(--text); }
+    .skill-pill .icon { font-size: 22px; margin-bottom: 6px; display: block; }
+
+    /* Certs */
+    .cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .cert {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px; font-size: 14px; color: var(--text-muted);
+    }
+    .cert .badge { color: var(--accent); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+
+    /* Education */
+    .edu-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px 24px;
+    }
+    .edu-card h4 { margin: 0 0 4px; font-size: 16px; font-weight: 700; }
+    .edu-card p { margin: 0; font-size: 14px; color: var(--text-muted); }
+
+    /* Print */
+    @media print {
+      .actions { display: none !important; }
+      body { background: #fff; color: #1a1a1a; }
+      .wrap { padding-top: 16px; }
+      .profile-hero h1 { color: #111; }
+      .profile-hero .tagline { color: #444; }
+      .sec-title { color: #1a5cff; border-color: #ddd; }
+      .metric { border-color: #ddd; background: #f9f9f9; }
+      .metric .num { -webkit-text-fill-color: #1a5cff; color: #1a5cff; }
+      .exp-card, .skill-pill, .cert, .edu-card { border-color: #ddd; background: #fafafa; }
+      .exp-header h3, .edu-card h4 { color: #111; }
+      .exp-company { color: #1a5cff; }
+      .exp-highlights li { color: #333; }
+      .exp-scale { background: #e8f8f0; border-color: #b8e8d0; color: #1a8a5a; }
+    }
+
+    @media (max-width: 700px) {
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .cert-grid { grid-template-columns: 1fr; }
+      .wrap { padding: 80px 16px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="actions">
+  <a href="/" class="back">&larr; Back to Home</a>
+  <div class="btns">
+    <button class="btn btn--ghost" onclick="window.print()">🖨️ Print</button>
+    <button class="btn btn--primary" onclick="document.title='Prashant_Talele_Profile';window.print();">⬇ Download PDF</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- Hero -->
+  <header class="profile-hero">
+    <div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;margin-bottom:20px;">
+      <img src="/images/profile.jpg" alt="Prashant Talele" style="width:110px;height:110px;border-radius:50%;object-fit:cover;border:3px solid var(--border-strong);" />
+      <div>
+        <h1>Prashant Talele</h1>
+        <p class="tagline">Software Development Leader who builds and scales authentication, identity, and financial platforms serving hundreds of millions of customers globally.</p>
+      </div>
+    </div>
+    <div class="contact-row">
+      <span>📧 prashant.talele@gmail.com</span>
+      <span>🌐 <a href="https://www.prashanttalele.com">prashanttalele.com</a></span>
+      <span>🔗 <a href="https://www.linkedin.com/in/prashant-talele-1859344" target="_blank" rel="noopener noreferrer">LinkedIn</a></span>
+      <span>🐙 <a href="https://github.com/ptalele" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+    </div>
+  </header>
+
+  <!-- Impact Metrics -->
+  <div class="metrics">
+    <div class="metric">
+      <div class="num">22+</div>
+      <div class="lbl">Years Leading Engineering</div>
+    </div>
+    <div class="metric">
+      <div class="num">300M+</div>
+      <div class="lbl">Users Authenticated Daily</div>
+    </div>
+    <div class="metric">
+      <div class="num">82%</div>
+      <div class="lbl">Sign-In Friction Reduced on Known Devices</div>
+    </div>
+    <div class="metric">
+      <div class="num">$8M+</div>
+      <div class="lbl">Cumulative Annual Cost Savings</div>
+    </div>
+  </div>
+
+  <!-- Experience -->
+  <section>
+    <h2 class="sec-title">Leadership Experience</h2>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <h3>Senior Manager — Authentication &amp; Identity Services</h3>
+        <span class="exp-period">Aug 2021 – Present</span>
+      </div>
+      <div class="exp-company">Amazon</div>
+      <div class="exp-scale">⚡ Scale: 300M+ daily authentications across 5 global regions, sub-100ms p99 latency</div>
+      <ul class="exp-highlights">
+        <li><strong>Own the sign-in experience for hundreds of millions of customers</strong> — lead teams building and operating the platforms that power login, registration, account maintenance, and verification flows across all Amazon marketplaces.</li>
+        <li><strong>Drove 99.99% service availability</strong> for authentication services through resilient multi-region architecture, automated failover, and proactive capacity planning.</li>
+        <li><strong>Reduced authentication latency by 35%</strong> through architecture redesign, caching strategies, and elimination of synchronous cross-service calls.</li>
+        <li><strong>Led migration to modern identity standards</strong> including FIDO2/WebAuthn passkeys, risk-based step-up authentication, and device-bound credentials at global scale.</li>
+        <li><strong>Pioneered AI-driven fraud detection for authentication flows</strong> — deployed ML models that analyze behavioral signals in real-time, reducing account takeover attempts by 60% while cutting false-positive friction for legitimate users by 40%.</li>
+        <li><strong>Launched agentic AI workflows for identity operations</strong> — built autonomous agent systems that investigate and resolve authentication incidents, reducing mean-time-to-resolution from hours to minutes and freeing on-call engineers from repetitive toil.</li>
+        <li><strong>Drove 3x developer productivity gains</strong> through AI-assisted code generation, automated test authoring, and intelligent code review agents integrated into the team's development workflow.</li>
+        <li><strong>Implemented AI-powered anomaly detection</strong> for authentication traffic patterns, enabling proactive scaling and early detection of credential-stuffing attacks before they impact customer experience.</li>
+        <li><strong>Built and coached 4 autonomous engineering teams</strong> (25+ engineers) with a culture of ownership, operational excellence, and customer obsession.</li>
+        <li><strong>Defined and executed the 3-year technology roadmap</strong> for authentication services, aligning with company-wide security, AI-first strategy, and customer-experience goals.</li>
+        <li><strong>Delivered zero-downtime deployments</strong> across all regions using progressive rollout, canary analysis, and automated rollback systems.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <h3>Senior Manager — Application Engineering</h3>
+        <span class="exp-period">Nov 2010 – Aug 2021</span>
+      </div>
+      <div class="exp-company">Discover Financial Services</div>
+      <div class="exp-scale">⚡ Scale: $130B+ transaction volume, 50M+ cardholders, flagship banking platform</div>
+      <ul class="exp-highlights">
+        <li><strong>Architected and delivered the commercial banking flagship product</strong> processing $130B+ in annual transaction volume, expanding scope, scale, performance, and reliability.</li>
+        <li><strong>Led department transformation to product-oriented delivery model</strong> — moved 8 teams from project-based to product-based delivery, reducing time-to-market by 40%.</li>
+        <li><strong>Drove $2.4M annual cost reduction</strong> through extreme automation, legacy system decommissioning, and cloud-native modernization initiatives.</li>
+        <li><strong>Managed software lifecycle from concept to cash</strong> — owned budgets, resource allocation, vendor relationships, and financial performance for a $12M annual portfolio.</li>
+        <li><strong>Championed microservice migration</strong> — decomposed monolithic banking applications into 30+ domain-driven microservices, enabling independent deployment and scaling.</li>
+        <li><strong>Built a culture of engineering excellence</strong> — introduced TDD, pair programming, continuous deployment, and automated quality gates across all teams.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <h3>Technical Project Manager</h3>
+        <span class="exp-period">May 2010 – Nov 2010</span>
+      </div>
+      <div class="exp-company">Chicago Mercantile Exchange (CME Group)</div>
+      <div class="exp-scale">⚡ Scale: World's largest derivatives marketplace, 3B+ contracts/year</div>
+      <ul class="exp-highlights">
+        <li><strong>Delivered technology vision and roadmap for CME's core product capabilities</strong> — aligning engineering execution with the world's largest derivatives marketplace.</li>
+        <li><strong>Owned technical skill enablement and team allocation</strong> across multiple product engineering teams, ensuring solutions adhered to Enterprise Architecture guardrails.</li>
+        <li><strong>Drove product parity initiatives</strong> ensuring consistent trading capabilities across asset classes (futures, options, FX, commodities).</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <h3>Lead Consultant — eBusiness Delivery</h3>
+        <span class="exp-period">Mar 2005 – May 2010</span>
+      </div>
+      <div class="exp-company">HSBC Bank (via Capgemini Consulting)</div>
+      <div class="exp-scale">⚡ Scale: HSBC credit card acquisition platform, 80M+ customers globally</div>
+      <ul class="exp-highlights">
+        <li><strong>Led multiple cross-functional delivery teams</strong> building credit card acquisition products for one of the world's largest banking institutions.</li>
+        <li><strong>Designed and implemented reusable SSO authentication framework</strong> supporting LDAP, database, and XML-based auth — serving millions of daily sign-ins.</li>
+        <li><strong>Drove zero-defect releases</strong> through automated testing (JUnit + Maven), PMD/FindBugs integration, and rigorous code review processes.</li>
+        <li><strong>Architected high-performance web tier</strong> using MVC/Spring, J2EE patterns (Front Controller, Session Façade, DAO), and asynchronous processing.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <h3>Software Analyst</h3>
+        <span class="exp-period">Jun 2004 – Mar 2005</span>
+      </div>
+      <div class="exp-company">Arus Inc.</div>
+      <ul class="exp-highlights">
+        <li><strong>Built payment gateway interface</strong> handling credit, void, and return transactions for retail merchants.</li>
+        <li><strong>Developed loyalty program platform</strong> and CI/CD pipelines, reducing deployment time from days to hours.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Core Competencies -->
+  <section>
+    <h2 class="sec-title">Core Competencies</h2>
+    <div class="skills-grid">
+      <div class="skill-pill"><span class="icon">🏗️</span>System Architecture at Scale</div>
+      <div class="skill-pill"><span class="icon">🔐</span>Identity &amp; Authentication</div>
+      <div class="skill-pill"><span class="icon">👥</span>Engineering Team Building</div>
+      <div class="skill-pill"><span class="icon">☁️</span>Cloud-Native (AWS)</div>
+      <div class="skill-pill"><span class="icon">📊</span>Product Strategy &amp; Roadmap</div>
+      <div class="skill-pill"><span class="icon">⚡</span>Operational Excellence</div>
+      <div class="skill-pill"><span class="icon">🔄</span>Digital Transformation</div>
+      <div class="skill-pill"><span class="icon">🎯</span>Agile / Product Delivery</div>
+      <div class="skill-pill"><span class="icon">🛡️</span>Security &amp; Compliance</div>
+      <div class="skill-pill"><span class="icon">💰</span>Budget &amp; P&amp;L Ownership</div>
+      <div class="skill-pill"><span class="icon">🧩</span>Microservice Architecture</div>
+      <div class="skill-pill"><span class="icon">🌍</span>Multi-Region Systems</div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section>
+    <h2 class="sec-title">Certifications</h2>
+    <div class="cert-grid">
+      <div class="cert">
+        <div class="badge">PMI</div>
+        Project Management Professional (PMP)
+      </div>
+      <div class="cert">
+        <div class="badge">AWS</div>
+        AWS Solutions Architect
+      </div>
+      <div class="cert">
+        <div class="badge">VMware</div>
+        Spring Professional Developer
+      </div>
+      <div class="cert">
+        <div class="badge">University of Virginia</div>
+        Digital Transformation Specialist
+      </div>
+      <div class="cert">
+        <div class="badge">XP</div>
+        Extreme Programming Certified
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section>
+    <h2 class="sec-title">Education</h2>
+    <div class="edu-card">
+      <h4>B.E. Information Technology — First Class with Distinction</h4>
+      <p>Pune University, India &nbsp;|&nbsp; 2000 – 2004</p>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

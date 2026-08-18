@@ -24,11 +24,9 @@ export default function Hero() {
         <div className="hero__cta">
           <a
             className="btn btn--primary"
-            href="images/Prashant_Talele.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/profile"
           >
-            View Profile &darr;
+            View Profile &rarr;
           </a>
           <a className="btn btn--ghost" href="#projects">
             Explore Projects
