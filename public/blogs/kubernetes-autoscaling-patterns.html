@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kubernetes Autoscaling Patterns for High-Traffic Services | Prashant Talele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b0e14;--bg-elev:#11151f;--text:#e6e9f0;--text-muted:#97a0b5;--accent:#5b8cff;--font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+    *{box-sizing:border-box;}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;padding:0;}
+    .wrap{max-width:760px;margin:0 auto;padding:80px 24px 64px;}
+    a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+    .back{display:inline-block;margin-bottom:32px;font-size:14px;color:var(--text-muted);}
+    h1{font-size:clamp(28px,5vw,42px);line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:0 0 16px;}
+    .meta{color:var(--text-muted);font-size:14px;margin-bottom:36px;}
+    h2{font-size:24px;font-weight:700;margin:40px 0 12px;}
+    p,ul,ol{margin:0 0 20px;}ul,ol{padding-left:24px;}li{margin-bottom:8px;}
+    code{background:var(--bg-elev);padding:2px 6px;border-radius:4px;font-size:14px;}
+    pre{background:var(--bg-elev);padding:20px;border-radius:10px;overflow-x:auto;font-size:14px;margin:0 0 24px;}pre code{background:none;padding:0;}
+    blockquote{border-left:3px solid var(--accent);margin:0 0 20px;padding:12px 20px;color:var(--text-muted);font-style:italic;}
+    figure{margin:32px 0;padding:24px;background:var(--bg-elev);border:1px solid #232a3a;border-radius:12px;}
+    figure svg{width:100%;height:auto;display:block;}
+    figcaption{margin-top:14px;font-size:13px;color:var(--text-muted);text-align:center;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="back">&larr; Back to Home</a>
+  <h1>Kubernetes Autoscaling Patterns for High-Traffic Services</h1>
+  <div class="meta">November 12, 2024 &middot; DevOps &middot; 7 min read</div>
+
+  <p>Autoscaling is the promise of cloud-native: your service handles a surge in traffic without manual intervention, then scales back down to save cost. In practice, getting autoscaling right on Kubernetes requires understanding the different scaling dimensions and when each applies.</p>
+
+  <h2>The Three Scaling Dimensions</h2>
+
+  <figure>
+    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <!-- HPA -->
+      <rect x="40" y="60" width="170" height="70" rx="10" stroke="#5b8cff" stroke-width="2"/>
+      <text x="125" y="90" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="13" font-weight="700">HPA</text>
+      <text x="125" y="110" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="10">Horizontal Pod Autoscaler</text>
+      <text x="125" y="123" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="9">± Replicas</text>
+      <!-- VPA -->
+      <rect x="265" y="60" width="170" height="70" rx="10" stroke="#8b5bff" stroke-width="2"/>
+      <text x="350" y="90" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="13" font-weight="700">VPA</text>
+      <text x="350" y="110" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="10">Vertical Pod Autoscaler</text>
+      <text x="350" y="123" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="9">± CPU/Memory per Pod</text>
+      <!-- Cluster Autoscaler -->
+      <rect x="490" y="60" width="170" height="70" rx="10" stroke="#3fd68c" stroke-width="2"/>
+      <text x="575" y="85" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="13" font-weight="700">Cluster</text>
+      <text x="575" y="103" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="13" font-weight="700">Autoscaler</text>
+      <text x="575" y="123" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="9">± Nodes</text>
+      <!-- Bidirectional arrows -->
+      <path d="M210 95 L265 95" stroke="#ffbe5b" stroke-width="2"/>
+      <path d="M210 90 L225 95 L210 100" fill="#ffbe5b"/>
+      <path d="M265 90 L250 95 L265 100" fill="#ffbe5b"/>
+      <path d="M435 95 L490 95" stroke="#ffbe5b" stroke-width="2"/>
+      <path d="M435 90 L450 95 L435 100" fill="#ffbe5b"/>
+      <path d="M490 90 L475 95 L490 100" fill="#ffbe5b"/>
+      <!-- Labels -->
+      <text x="237" y="82" text-anchor="middle" fill="#ffbe5b" font-family="Inter, sans-serif" font-size="9">conflict</text>
+      <text x="462" y="82" text-anchor="middle" fill="#ffbe5b" font-family="Inter, sans-serif" font-size="9">triggers</text>
+      <!-- Description -->
+      <text x="350" y="165" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="10">Three complementary scaling axes — HPA and VPA can conflict; Cluster Autoscaler responds to unschedulable pods</text>
+    </svg>
+    <figcaption>The three Kubernetes autoscaling dimensions and their interactions</figcaption>
+  </figure>
+
+  <ol>
+    <li><strong>Horizontal Pod Autoscaler (HPA)</strong> — adds or removes pod replicas based on CPU, memory, or custom metrics. The most common starting point.</li>
+    <li><strong>Vertical Pod Autoscaler (VPA)</strong> — adjusts resource requests/limits per pod. Useful for workloads where adding replicas doesn't help (e.g., single-threaded batch jobs).</li>
+    <li><strong>Cluster Autoscaler</strong> — adds or removes nodes when pods can't be scheduled due to insufficient cluster capacity.</li>
+  </ol>
+
+  <h2>Custom Metrics: Beyond CPU</h2>
+  <p>CPU-based autoscaling is a poor proxy for many services. Better signals include:</p>
+  <ul>
+    <li><strong>Request queue depth</strong> — how many requests are waiting to be processed</li>
+    <li><strong>P99 latency</strong> — scale up when latency degrades below SLO threshold</li>
+    <li><strong>Messages in queue</strong> — for worker pods consuming from Kafka/SQS</li>
+    <li><strong>Active connections</strong> — for WebSocket or long-lived connection services</li>
+  </ul>
+  <p>Use the Prometheus adapter or KEDA (Kubernetes Event-Driven Autoscaler) to feed these custom metrics into HPA decisions.</p>
+
+  <h2>Scaling for Predictable Traffic</h2>
+  <p>If your traffic is predictable (daily peaks, scheduled events), use <strong>scheduled scaling</strong> — pre-warm replicas before the spike arrives. Reactive autoscaling alone adds latency because new pods take time to start and warm up.</p>
+
+  <h2>Anti-Patterns to Avoid</h2>
+  <ul>
+    <li><strong>Thrashing</strong> — scaling up and down rapidly because the metric oscillates. Fix with stabilization windows and cooldown periods.</li>
+    <li><strong>Under-provisioned resource requests</strong> — if pods request too little CPU/memory, they get throttled before HPA even triggers. Right-size requests first.</li>
+    <li><strong>Ignoring startup time</strong> — if your service takes 60 seconds to start, a sudden spike will cause dropped requests. Use readiness probes and scale ahead of demand.</li>
+    <li><strong>Scaling on average, not tail</strong> — average CPU at 50% hides the fact that some pods are saturated. Use max or P95 as the scaling signal.</li>
+  </ul>
+
+  <h2>A Practical Starting Configuration</h2>
+  <pre><code>apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-service
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my-service
+  minReplicas: 3
+  maxReplicas: 50
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 30
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 10
+          periodSeconds: 60
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70</code></pre>
+
+  <blockquote>Autoscaling is not set-and-forget. It requires tuning, load testing, and continuous monitoring — just like the service itself.</blockquote>
+</div>
+</body>
+</html>

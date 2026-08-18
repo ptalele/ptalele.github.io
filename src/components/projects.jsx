@@ -1,129 +1,116 @@
-	import React, { Component } from 'react'
+import React from 'react';
 
-export default class Projects extends Component {
-  render() {
-    return (
-      <div>
-				<section className="colorlib-work" data-section="projects">
-					<div className="colorlib-narrow-content">
-						<div className="row">
-							<div className="col-md-6 col-md-offset-3 col-md-pull-3 animate-box" data-animate-effect="fadeInLeft">
-								<span className="heading-meta">My Work</span>
-								<h2 className="colorlib-heading animate-box">Recent Projects</h2>
-							</div>
-						</div>
-						<div className="row">
-						<a href="https://github.com/ptalele/xlsstreamer">
-							<div className="col-md-4 animate-box" data-animate-effect="fadeInLeft">
-								<div className="project" style={{backgroundImage: 'url(images/img-1.jpg)'}}>
-									<div className="desc">
-										<div className="con">
-											<h3><a href="https://github.com/ptalele/xlsstreamer">XSL Streamer</a></h3>
-											<span>Async reader for large Xsl files</span>
-											<p className="icon">
-												<span><a href="#"><i className="icon-share3" /></a></span>
-												<span><a href="https://github.com/ptalele/xlsstreamer/watchers"><i className="icon-eye" /> 100</a></span>
-												<span><a href="https://github.com/ptalele/xlsstreamer/stargazers"><i className="icon-heart" /> 49</a></span>
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							</a>
-							<a href="https://github.com/ptalele/Junit5Demo">
-							<div className="col-md-4 animate-box" data-animate-effect="fadeInRight">
-								<div className="project" style={{backgroundImage: 'url(images/img-2.jpg)'}}>
-									<div className="desc">
-										<div className="con">
-											<h3><a href="https://github.com/ptalele/Junit5Demo">Junit5 - next generation of JUnit</a></h3>
-											<span>“Quality is never an accident; it is always the result of intelligent effort.”</span>
-											<p className="icon">
-												<span><a href="#"><i className="icon-share3" /></a></span>
-												<span><a href="https://github.com/ptalele/Junit5Demo/watchers"><i className="icon-eye" /> 98</a></span>
-												<span><a href="https://github.com/ptalele/Junit5Demo/stargazers"><i className="icon-heart" /> 25</a></span>
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							</a>
-							<a href="https://github.com/ptalele/PythonWithFlask">
-							<div className="col-md-4 animate-box" data-animate-effect="fadeInTop">
-								<div className="project" style={{backgroundImage: 'url(images/img-3.jpg)'}}>
-									<div className="desc">
-										<div className="con">
-											<h3><a href="https://github.com/ptalele/PythonWithFlask">Rest API with python and Flask</a></h3>
-											<span>Rest API with Python</span>
-											<p className="icon">
-												<span><a href="#"><i className="icon-share3" /></a></span>
-												<span><a href="https://github.com/ptalele/PythonWithFlask/watchers"><i className="icon-eye" /> 55</a></span>
-												<span><a href="https://github.com/ptalele/PythonWithFlask/stargazers"><i className="icon-heart" /> 12</a></span>
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							</a>
-							<a href="https://github.com/ptalele/AngularWithBoot">
-							<div className="col-md-4 animate-box" data-animate-effect="fadeInBottom">
-								<div className="project" style={{backgroundImage: 'url(images/img-4.jpg)'}}>
-									<div className="desc">
-										<div className="con">
-											<h3><a href="https://github.com/ptalele/AngularWithBoot">Spring Boot - Angular Integration</a></h3>
-											<span>Demonstrates how to integrate Angular in Spring Boot using Gradle.</span>
-											<p className="icon">
-												<span><a href="#"><i className="icon-share3" /></a></span>
-												<span><a href="https://github.com/ptalele/AngularWithBoot/watchers"><i className="icon-eye" /> 76</a></span>
-												<span><a href="https://github.com/ptalele/AngularWithBoot/stargazers"><i className="icon-heart" /> 49</a></span>
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							</a>
-							<a href="https://github.com/ptalele/aws-lambda">
-							<div className="col-md-4 animate-box" data-animate-effect="fadeInLeft">
-								<div className="project" style={{backgroundImage: 'url(images/img-5.jpg)'}}>
-									<div className="desc">
-										<div className="con">
-											<h3><a href="https://github.com/ptalele/aws-lambda">AWS Lambda Implementation</a></h3>
-											<span>Sample use case implementation for AWS Lambda</span>
-											<p className="icon">
-												<span><a href="#"><i className="icon-share3" /></a></span>
-												<span><a href="https://github.com/ptalele/aws-lambda/watchers"><i className="icon-eye" /> 100</a></span>
-												<span><a href="https://github.com/ptalele/aws-lambda/stargazers"><i className="icon-heart" /> 49</a></span>
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							</a>
-							<a href="https://github.com/ptalele/SpringbootCustomStarter">
-							<div className="col-md-4 animate-box" data-animate-effect="fadeInRight">
-								<div className="project" style={{backgroundImage: 'url(images/img-6.jpg)'}}>
-									<div className="desc">
-										<div className="con">
-											<h3><a href="https://github.com/ptalele/SpringbootCustomStarter">Spring boot Custom starter</a></h3>
-											<span>Customize spring boot starter </span>
-											<p className="icon">
-												<span><a href="#"><i className="icon-share3" /></a></span>
-												<span><a href="https://github.com/ptalele/SpringbootCustomStarter/watchers"><i className="icon-eye" /> 100</a></span>
-												<span><a href="https://github.com/ptalele/SpringbootCustomStarter/stargazers"><i className="icon-heart" /> 49</a></span>
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							</a>
-						</div>
-						<div className="row">
-							<div className="col-md-12 animate-box">
-								<p><a href="#" className="btn btn-primary btn-lg btn-load-more">Load more <i className="icon-reload" /></a></p>
-							</div>
-						</div>
-					</div>
-				</section>
+const PROJECTS = [
+  {
+    name: 'XSL Streamer',
+    repo: 'ptalele/xlsstreamer',
+    url: 'https://github.com/ptalele/xlsstreamer',
+    desc: 'Async reader for large XLS files.',
+    watchers: 100,
+    stars: 49,
+  },
+  {
+    name: 'JUnit 5 Demo',
+    repo: 'ptalele/Junit5Demo',
+    url: 'https://github.com/ptalele/Junit5Demo',
+    desc: 'The next generation of JUnit. Quality is never an accident.',
+    watchers: 98,
+    stars: 25,
+  },
+  {
+    name: 'REST API with Python & Flask',
+    repo: 'ptalele/PythonWithFlask',
+    url: 'https://github.com/ptalele/PythonWithFlask',
+    desc: 'Building a REST API with Python and Flask.',
+    watchers: 55,
+    stars: 12,
+  },
+  {
+    name: 'SpakTrader',
+    label: 'Live app',
+    url: '/spak',
+    external: false,
+    live: true,
+    desc: 'An interactive trading dashboard built with Streamlit. Launches the live app.',
+  },
+  {
+    name: 'AWS Lambda Implementation',
+    repo: 'ptalele/aws-lambda',
+    url: 'https://github.com/ptalele/aws-lambda',
+    desc: 'Sample use-case implementation for AWS Lambda.',
+    watchers: 100,
+    stars: 49,
+  },
+  {
+    name: 'Spring Boot Custom Starter',
+    repo: 'ptalele/SpringbootCustomStarter',
+    url: 'https://github.com/ptalele/SpringbootCustomStarter',
+    desc: 'Customizing a Spring Boot starter.',
+    watchers: 100,
+    stars: 49,
+  },
+];
+
+export default function Projects() {
+  return (
+    <section id="projects" className="section">
+      <div className="container">
+        <div className="reveal">
+          <span className="section-label">My Work</span>
+          <h2 className="section-title">Recent projects</h2>
+          <p className="section-intro">
+            A selection of open-source work spanning Java, Spring Boot, Python, AWS and testing.
+          </p>
+        </div>
+
+        <div className="grid grid--3">
+          {PROJECTS.map((p, i) => {
+            const isExternal = p.external !== false;
+            return (
+              <a
+                className="card project-card reveal"
+                key={p.name}
+                href={p.url}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                style={{ transitionDelay: `${(i % 3) * 60}ms` }}
+              >
+                <div className="project-card__top">
+                  <span className="project-card__repo">
+                    {p.live ? '\u26A1' : '\uD83D\uDCE6'} {p.repo || p.label}
+                  </span>
+                  <span className="project-card__arrow" aria-hidden="true">
+                    {'\u2197'}
+                  </span>
+                </div>
+                <h3 className="card__title">{p.name}</h3>
+                <p className="card__body">{p.desc}</p>
+                <div className="project-card__stats">
+                  {p.live ? (
+                    <span aria-label="status">{'\uD83D\uDFE2'} Live</span>
+                  ) : (
+                    <>
+                      <span aria-label="watchers">{'\uD83D\uDC41'} {p.watchers}</span>
+                      <span aria-label="stars">{'\u2605'} {p.stars}</span>
+                    </>
+                  )}
+                </div>
+              </a>
+            );
+          })}
+        </div>
+
+        <div className="reveal" style={{ marginTop: 32 }}>
+          <a
+            className="btn btn--ghost"
+            href="https://github.com/ptalele"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View all on GitHub &rarr;
+          </a>
+        </div>
       </div>
-    )
-  }
+    </section>
+  );
 }

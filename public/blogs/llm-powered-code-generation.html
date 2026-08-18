@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LLM-Powered Code Generation: Practical Patterns | Prashant Talele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b0e14;--bg-elev:#11151f;--text:#e6e9f0;--text-muted:#97a0b5;--accent:#5b8cff;--font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+    *{box-sizing:border-box;}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;padding:0;}
+    .wrap{max-width:760px;margin:0 auto;padding:80px 24px 64px;}
+    a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+    .back{display:inline-block;margin-bottom:32px;font-size:14px;color:var(--text-muted);}
+    h1{font-size:clamp(28px,5vw,42px);line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:0 0 16px;}
+    .meta{color:var(--text-muted);font-size:14px;margin-bottom:36px;}
+    h2{font-size:24px;font-weight:700;margin:40px 0 12px;}
+    p,ul,ol{margin:0 0 20px;}ul,ol{padding-left:24px;}li{margin-bottom:8px;}
+    code{background:var(--bg-elev);padding:2px 6px;border-radius:4px;font-size:14px;}
+    pre{background:var(--bg-elev);padding:20px;border-radius:10px;overflow-x:auto;font-size:14px;margin:0 0 24px;}pre code{background:none;padding:0;}
+    blockquote{border-left:3px solid var(--accent);margin:0 0 20px;padding:12px 20px;color:var(--text-muted);font-style:italic;}
+    figure{margin:32px 0;padding:24px;background:var(--bg-elev);border:1px solid #232a3a;border-radius:12px;}
+    figure svg{width:100%;height:auto;display:block;}
+    figcaption{margin-top:14px;font-size:13px;color:var(--text-muted);text-align:center;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="back">&larr; Back to Home</a>
+  <h1>LLM-Powered Code Generation: Practical Patterns</h1>
+  <div class="meta">May 5, 2025 &middot; AI &middot; 7 min read</div>
+
+  <p>Large Language Models have moved from novelty to daily driver for many engineering teams. But getting consistent, production-quality code from an LLM requires more than just prompting — it requires patterns, guardrails, and feedback loops.</p>
+
+  <h2>The Prompt Engineering Spectrum</h2>
+  <p>Effective code generation prompts live on a spectrum from unstructured to highly constrained:</p>
+  <ul>
+    <li><strong>Zero-shot</strong> — "Write a function that..." Works for simple, well-known patterns.</li>
+    <li><strong>Few-shot with examples</strong> — providing input/output examples dramatically improves output quality for domain-specific code.</li>
+    <li><strong>Spec-driven</strong> — providing a formal specification (types, contracts, test cases) and asking the model to implement against it. Most reliable for production use.</li>
+  </ul>
+
+  <h2>The Generate-Test-Fix Loop</h2>
+
+  <figure>
+    <svg viewBox="0 0 700 160" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <!-- Generate -->
+      <rect x="30" y="50" width="140" height="60" rx="10" stroke="#5b8cff" stroke-width="2"/>
+      <text x="100" y="85" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="14" font-weight="600">Generate</text>
+      <!-- Arrow 1 -->
+      <path d="M170 80 L230 80" stroke="#5b8cff" stroke-width="2" marker-end="url(#arrow1)"/>
+      <!-- Test -->
+      <rect x="230" y="50" width="140" height="60" rx="10" stroke="#3fd68c" stroke-width="2"/>
+      <text x="300" y="85" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="14" font-weight="600">Test</text>
+      <!-- Arrow 2 -->
+      <path d="M370 80 L430 80" stroke="#3fd68c" stroke-width="2" marker-end="url(#arrow1g)"/>
+      <!-- Fix -->
+      <rect x="430" y="50" width="140" height="60" rx="10" stroke="#ff6b6b" stroke-width="2"/>
+      <text x="500" y="85" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="14" font-weight="600">Fix</text>
+      <!-- Loop arrow back -->
+      <path d="M500 110 C500 145, 100 145, 100 110" stroke="#8b5bff" stroke-width="2" stroke-dasharray="6 3" marker-end="url(#arrow1p)"/>
+      <text x="300" y="150" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="11">Repeat until tests pass</text>
+      <!-- Arrow markers -->
+      <defs>
+        <marker id="arrow1" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#5b8cff"/></marker>
+        <marker id="arrow1g" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#3fd68c"/></marker>
+        <marker id="arrow1p" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#8b5bff"/></marker>
+      </defs>
+    </svg>
+    <figcaption>The Generate-Test-Fix loop: iterative code generation with automated validation</figcaption>
+  </figure>
+
+  <p>The most effective pattern for LLM code generation is iterative:</p>
+  <ol>
+    <li>Generate code from a spec or description</li>
+    <li>Run the existing test suite (or generated tests) against the output</li>
+    <li>Feed compilation errors and test failures back to the model</li>
+    <li>Repeat until tests pass or a retry limit is hit</li>
+  </ol>
+  <p>This loop mirrors how human developers work — write, run, fix — and consistently produces better results than single-shot generation.</p>
+
+  <h2>Guardrails That Matter</h2>
+  <ul>
+    <li><strong>Type checking</strong> — run the compiler/linter after generation; type errors are the cheapest signal that something is wrong.</li>
+    <li><strong>Sandbox execution</strong> — never run LLM-generated code in production without isolation. Use containers or a dedicated test environment.</li>
+    <li><strong>Diff review</strong> — generated code should go through the same review process as human code. Treat the LLM as a junior developer, not an authority.</li>
+    <li><strong>Deterministic seeds</strong> — for reproducibility in CI, pin temperature to 0 and use consistent system prompts.</li>
+  </ul>
+
+  <h2>Where LLMs Excel (and Where They Don't)</h2>
+  <p><strong>Excel:</strong> boilerplate, CRUD operations, data transformations, test generation, documentation, and well-known patterns with rich training data.</p>
+  <p><strong>Struggle:</strong> novel algorithms, complex concurrency, security-sensitive code, and anything requiring deep domain knowledge outside the training distribution.</p>
+
+  <h2>Integration Into Your Workflow</h2>
+  <p>The highest-leverage integration points are:</p>
+  <ul>
+    <li>IDE-level completions for in-flow productivity</li>
+    <li>PR-level generation for boilerplate tasks (tests, migrations, documentation)</li>
+    <li>Spec-to-implementation pipelines for greenfield features with clear contracts</li>
+  </ul>
+
+  <blockquote>The goal is not to replace developers — it's to eliminate the mechanical work so engineers can focus on design, architecture, and the genuinely hard problems.</blockquote>
+</div>
+</body>
+</html>
