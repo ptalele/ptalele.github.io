@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Event-Driven Architecture for Fintech at Scale | Prashant Talele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b0e14;--bg-elev:#11151f;--text:#e6e9f0;--text-muted:#97a0b5;--accent:#5b8cff;--font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+    *{box-sizing:border-box;}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;padding:0;}
+    .wrap{max-width:760px;margin:0 auto;padding:80px 24px 64px;}
+    a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+    .back{display:inline-block;margin-bottom:32px;font-size:14px;color:var(--text-muted);}
+    h1{font-size:clamp(28px,5vw,42px);line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:0 0 16px;}
+    .meta{color:var(--text-muted);font-size:14px;margin-bottom:36px;}
+    h2{font-size:24px;font-weight:700;margin:40px 0 12px;}
+    p,ul,ol{margin:0 0 20px;}ul,ol{padding-left:24px;}li{margin-bottom:8px;}
+    code{background:var(--bg-elev);padding:2px 6px;border-radius:4px;font-size:14px;}
+    pre{background:var(--bg-elev);padding:20px;border-radius:10px;overflow-x:auto;font-size:14px;margin:0 0 24px;}pre code{background:none;padding:0;}
+    blockquote{border-left:3px solid var(--accent);margin:0 0 20px;padding:12px 20px;color:var(--text-muted);font-style:italic;}
+    figure{margin:32px 0;padding:24px;background:var(--bg-elev);border:1px solid #232a3a;border-radius:12px;}
+    figure svg{width:100%;height:auto;display:block;}
+    figcaption{margin-top:14px;font-size:13px;color:var(--text-muted);text-align:center;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="back">&larr; Back to Home</a>
+  <h1>Event-Driven Architecture for Fintech at Scale</h1>
+  <div class="meta">February 10, 2025 &middot; Architecture &middot; 7 min read</div>
+
+  <p>Financial systems demand real-time processing, strict ordering guarantees, and bulletproof audit trails. Event-driven architecture (EDA) provides the structural foundation that makes all three achievable at scale, while keeping services decoupled and independently deployable.</p>
+
+  <h2>Why EDA Fits Fintech</h2>
+  <ul>
+    <li><strong>Immutable event logs</strong> — every state change is captured as a fact. Perfect for regulatory audit and compliance.</li>
+    <li><strong>Temporal decoupling</strong> — producers and consumers don't need to be online at the same time. Critical for systems spanning multiple time zones and settlement windows.</li>
+    <li><strong>Natural fit for domain events</strong> — "PaymentInitiated," "FraudFlagged," "SettlementCompleted" map directly to business language.</li>
+  </ul>
+
+  <h2>Core Building Blocks</h2>
+
+  <figure>
+    <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <!-- Producers -->
+      <rect x="20" y="30" width="110" height="40" rx="8" stroke="#5b8cff" stroke-width="2"/>
+      <text x="75" y="54" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Producer A</text>
+      <rect x="20" y="80" width="110" height="40" rx="8" stroke="#5b8cff" stroke-width="2"/>
+      <text x="75" y="104" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Producer B</text>
+      <rect x="20" y="130" width="110" height="40" rx="8" stroke="#5b8cff" stroke-width="2"/>
+      <text x="75" y="154" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Producer C</text>
+      <!-- Arrows to broker -->
+      <path d="M130 50 L220 80" stroke="#5b8cff" stroke-width="1.5" marker-end="url(#arrowE1)"/>
+      <path d="M130 100 L220 100" stroke="#5b8cff" stroke-width="1.5" marker-end="url(#arrowE1)"/>
+      <path d="M130 150 L220 120" stroke="#5b8cff" stroke-width="1.5" marker-end="url(#arrowE1)"/>
+      <!-- Event Broker -->
+      <rect x="220" y="60" width="160" height="80" rx="10" stroke="#8b5bff" stroke-width="2.5"/>
+      <text x="300" y="95" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="13" font-weight="700">Event Broker</text>
+      <text x="300" y="115" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="10">(Kafka / Pulsar)</text>
+      <!-- Arrows to consumers -->
+      <path d="M380 80 L440 50" stroke="#3fd68c" stroke-width="1.5" marker-end="url(#arrowE2)"/>
+      <path d="M380 100 L440 100" stroke="#3fd68c" stroke-width="1.5" marker-end="url(#arrowE2)"/>
+      <path d="M380 120 L440 150" stroke="#3fd68c" stroke-width="1.5" marker-end="url(#arrowE2)"/>
+      <!-- Consumer Groups -->
+      <rect x="440" y="30" width="130" height="40" rx="8" stroke="#3fd68c" stroke-width="2"/>
+      <text x="505" y="54" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Payments Svc</text>
+      <rect x="440" y="80" width="130" height="40" rx="8" stroke="#3fd68c" stroke-width="2"/>
+      <text x="505" y="104" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Fraud Detection</text>
+      <rect x="440" y="130" width="130" height="40" rx="8" stroke="#3fd68c" stroke-width="2"/>
+      <text x="505" y="154" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Notifications</text>
+      <!-- DLQ -->
+      <rect x="590" y="130" width="90" height="40" rx="8" stroke="#ff6b6b" stroke-width="1.5" stroke-dasharray="5 3"/>
+      <text x="635" y="154" text-anchor="middle" fill="#ff6b6b" font-family="Inter, sans-serif" font-size="10" font-weight="500">DLQ</text>
+      <path d="M570 150 L590 150" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3 2"/>
+      <!-- Defs -->
+      <defs>
+        <marker id="arrowE1" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#5b8cff"/></marker>
+        <marker id="arrowE2" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#3fd68c"/></marker>
+      </defs>
+    </svg>
+    <figcaption>Event-driven architecture: producers emit events to a broker, consumed independently by multiple services with DLQ for failures</figcaption>
+  </figure>
+
+  <ol>
+    <li><strong>Event broker</strong> — Kafka, Amazon EventBridge, or Pulsar. The broker provides durable, ordered, partitioned streams.</li>
+    <li><strong>Event schema registry</strong> — versioned schemas (Avro, Protobuf) ensure producers and consumers agree on shape without tight coupling.</li>
+    <li><strong>Consumer groups</strong> — multiple services consume the same stream independently, each maintaining its own offset. One event, many reactions.</li>
+    <li><strong>Dead letter queues</strong> — messages that fail processing get routed for investigation rather than blocking the pipeline.</li>
+  </ol>
+
+  <h2>Patterns for Financial Workflows</h2>
+  <ul>
+    <li><strong>Event sourcing</strong> — persist every event, derive current state by replaying. Enables point-in-time queries and rebuilding state from scratch.</li>
+    <li><strong>CQRS</strong> — separate write (command) and read (query) paths. The write side emits events; the read side builds optimized views.</li>
+    <li><strong>Saga pattern</strong> — coordinate multi-step transactions across services using compensating events rather than distributed locks.</li>
+  </ul>
+
+  <h2>Challenges</h2>
+  <ul>
+    <li><strong>Exactly-once semantics</strong> — in practice, design for at-least-once delivery with idempotent consumers.</li>
+    <li><strong>Ordering guarantees</strong> — events for the same entity must be processed in order. Partition by entity ID.</li>
+    <li><strong>Schema evolution</strong> — backwards-compatible changes only; breaking changes require a new topic version.</li>
+    <li><strong>Observability</strong> — trace a single business event across 10+ services. Correlation IDs and distributed tracing are non-negotiable.</li>
+  </ul>
+
+  <blockquote>In fintech, events are not implementation details — they are the business reality. The architecture should reflect that.</blockquote>
+</div>
+</body>
+</html>

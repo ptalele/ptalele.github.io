@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Building Trading Bots with Python and Real-Time Data | Prashant Talele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b0e14;--bg-elev:#11151f;--text:#e6e9f0;--text-muted:#97a0b5;--accent:#5b8cff;--font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+    *{box-sizing:border-box;}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;padding:0;}
+    .wrap{max-width:760px;margin:0 auto;padding:80px 24px 64px;}
+    a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+    .back{display:inline-block;margin-bottom:32px;font-size:14px;color:var(--text-muted);}
+    h1{font-size:clamp(28px,5vw,42px);line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:0 0 16px;}
+    .meta{color:var(--text-muted);font-size:14px;margin-bottom:36px;}
+    h2{font-size:24px;font-weight:700;margin:40px 0 12px;}
+    p,ul,ol{margin:0 0 20px;}ul,ol{padding-left:24px;}li{margin-bottom:8px;}
+    code{background:var(--bg-elev);padding:2px 6px;border-radius:4px;font-size:14px;}
+    pre{background:var(--bg-elev);padding:20px;border-radius:10px;overflow-x:auto;font-size:14px;margin:0 0 24px;}pre code{background:none;padding:0;}
+    blockquote{border-left:3px solid var(--accent);margin:0 0 20px;padding:12px 20px;color:var(--text-muted);font-style:italic;}
+    figure{margin:32px 0;padding:24px;background:var(--bg-elev);border:1px solid #232a3a;border-radius:12px;}
+    figure svg{width:100%;height:auto;display:block;}
+    figcaption{margin-top:14px;font-size:13px;color:var(--text-muted);text-align:center;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="back">&larr; Back to Home</a>
+  <h1>Building Trading Bots with Python and Real-Time Data</h1>
+  <div class="meta">April 15, 2025 &middot; Trading &middot; 9 min read</div>
+
+  <p>Python's rich ecosystem makes it an ideal choice for building trading bots that connect to live markets, process real-time data, and execute orders programmatically. This post walks through the architecture decisions and key libraries involved in building a production-ready trading bot.</p>
+
+  <h2>Core Components</h2>
+
+  <figure>
+    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <!-- Data Feed -->
+      <rect x="20" y="70" width="120" height="56" rx="9" stroke="#5b8cff" stroke-width="2"/>
+      <text x="80" y="102" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="13" font-weight="600">Data Feed</text>
+      <!-- Arrow -->
+      <path d="M140 98 L180 98" stroke="#5b8cff" stroke-width="2" marker-end="url(#arrowT1)"/>
+      <!-- Strategy -->
+      <rect x="180" y="70" width="120" height="56" rx="9" stroke="#8b5bff" stroke-width="2"/>
+      <text x="240" y="102" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="13" font-weight="600">Strategy</text>
+      <!-- Arrow -->
+      <path d="M300 98 L340 98" stroke="#8b5bff" stroke-width="2" marker-end="url(#arrowT2)"/>
+      <!-- Order Manager -->
+      <rect x="340" y="70" width="130" height="56" rx="9" stroke="#3fd68c" stroke-width="2"/>
+      <text x="405" y="102" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="13" font-weight="600">Order Manager</text>
+      <!-- Arrow -->
+      <path d="M470 98 L510 98" stroke="#3fd68c" stroke-width="2" marker-end="url(#arrowT3)"/>
+      <!-- Broker -->
+      <rect x="510" y="70" width="120" height="56" rx="9" stroke="#ffbe5b" stroke-width="2"/>
+      <text x="570" y="102" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="13" font-weight="600">Broker API</text>
+      <!-- Risk Layer -->
+      <rect x="240" y="150" width="200" height="40" rx="8" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="5 3"/>
+      <text x="340" y="175" text-anchor="middle" fill="#ff6b6b" font-family="Inter, sans-serif" font-size="12" font-weight="500">Risk Layer (guards all orders)</text>
+      <!-- Risk connections -->
+      <path d="M340 170 L340 126" stroke="#ff6b6b" stroke-width="1.5" stroke-dasharray="4 2" opacity="0.6"/>
+      <path d="M405 126 L405 150" stroke="#ff6b6b" stroke-width="1.5" stroke-dasharray="4 2" opacity="0.6"/>
+      <!-- Defs -->
+      <defs>
+        <marker id="arrowT1" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#5b8cff"/></marker>
+        <marker id="arrowT2" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#8b5bff"/></marker>
+        <marker id="arrowT3" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#3fd68c"/></marker>
+      </defs>
+    </svg>
+    <figcaption>Trading bot component architecture: data flows through strategy and order management with risk oversight</figcaption>
+  </figure>
+
+  <ol>
+    <li><strong>Data feed handler</strong> — WebSocket connections to exchange APIs (Alpaca, Interactive Brokers, Binance) for live price data</li>
+    <li><strong>Strategy engine</strong> — stateful logic that processes incoming ticks and emits trading signals</li>
+    <li><strong>Order manager</strong> — translates signals into API calls, tracks fills, and manages open positions</li>
+    <li><strong>Risk layer</strong> — enforces position limits, daily loss caps, and correlation checks before orders fire</li>
+    <li><strong>Persistence</strong> — logs every decision and trade for audit, debugging, and performance analysis</li>
+  </ol>
+
+  <h2>Choosing a Data Source</h2>
+  <p>For equities, <code>alpaca-trade-api</code> provides commission-free trading with a clean REST/WebSocket interface. For crypto, <code>ccxt</code> is the universal adapter supporting 100+ exchanges. For options and futures, Interactive Brokers' <code>ib_insync</code> wrapper simplifies the TWS API.</p>
+
+  <h2>The Event Loop</h2>
+  <p>A trading bot is fundamentally an event-driven system. Python's <code>asyncio</code> is the natural fit:</p>
+  <pre><code>import asyncio
+
+async def on_bar(bar):
+    signal = strategy.evaluate(bar)
+    if signal and risk.allows(signal):
+        await broker.submit_order(signal)
+
+async def main():
+    async for bar in data_feed.stream():
+        await on_bar(bar)
+
+asyncio.run(main())</code></pre>
+  <p>Keep the event loop non-blocking. Heavy computation (ML inference, complex indicators) should run in a thread pool or a separate process.</p>
+
+  <h2>Backtesting vs. Live: Bridging the Gap</h2>
+  <p>Design your strategy as a pure function that takes market state and returns a signal. Feed it historical data during backtest, live data in production — same code path, different data source. Libraries like <code>backtrader</code> or <code>vectorbt</code> can accelerate historical testing.</p>
+
+  <h2>Deployment Patterns</h2>
+  <ul>
+    <li><strong>Local machine</strong> — fine for development but unreliable for 24/7 operation</li>
+    <li><strong>Cloud VM (EC2, GCE)</strong> — colocated near exchange servers for lower latency</li>
+    <li><strong>Containerized (Docker + systemd)</strong> — reproducible, restartable, easy to monitor</li>
+    <li><strong>Serverless (Lambda + EventBridge)</strong> — works for low-frequency strategies on scheduled intervals</li>
+  </ul>
+
+  <h2>Monitoring and Alerts</h2>
+  <p>A trading bot in production needs the same observability as any critical system: structured logging, metrics dashboards (Grafana), and alerting on anomalies (unexpected fills, API errors, strategy drift). Never deploy a bot you cannot shut down remotely with one command.</p>
+
+  <blockquote>A trading bot is only as good as its kill switch. Build the off-ramp before you build the on-ramp.</blockquote>
+</div>
+</body>
+</html>

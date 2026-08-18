@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vector Databases Explained: The Backbone of Modern AI Search | Prashant Talele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b0e14;--bg-elev:#11151f;--text:#e6e9f0;--text-muted:#97a0b5;--accent:#5b8cff;--font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+    *{box-sizing:border-box;}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;padding:0;}
+    .wrap{max-width:760px;margin:0 auto;padding:80px 24px 64px;}
+    a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+    .back{display:inline-block;margin-bottom:32px;font-size:14px;color:var(--text-muted);}
+    h1{font-size:clamp(28px,5vw,42px);line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:0 0 16px;}
+    .meta{color:var(--text-muted);font-size:14px;margin-bottom:36px;}
+    h2{font-size:24px;font-weight:700;margin:40px 0 12px;}
+    p,ul,ol{margin:0 0 20px;}ul,ol{padding-left:24px;}li{margin-bottom:8px;}
+    code{background:var(--bg-elev);padding:2px 6px;border-radius:4px;font-size:14px;}
+    blockquote{border-left:3px solid var(--accent);margin:0 0 20px;padding:12px 20px;color:var(--text-muted);font-style:italic;}
+    figure{margin:32px 0;padding:24px;background:var(--bg-elev);border:1px solid #232a3a;border-radius:12px;}
+    figure svg{width:100%;height:auto;display:block;}
+    figcaption{margin-top:14px;font-size:13px;color:var(--text-muted);text-align:center;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="back">&larr; Back to Home</a>
+  <h1>Vector Databases Explained: The Backbone of Modern AI Search</h1>
+  <div class="meta">December 29, 2024 &middot; AI &middot; 6 min read</div>
+
+  <p>Every RAG pipeline, semantic search feature, and recommendation engine relies on the same underlying primitive: finding the "closest" items in high-dimensional space. Vector databases make this fast at scale, and understanding how they work is essential for anyone building AI-powered products.</p>
+
+  <h2>From Text to Vectors</h2>
+
+  <figure>
+    <svg viewBox="0 0 700 150" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <!-- Text -->
+      <rect x="15" y="45" width="90" height="50" rx="8" stroke="#5b8cff" stroke-width="2"/>
+      <text x="60" y="74" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="12" font-weight="600">Text</text>
+      <!-- Arrow -->
+      <path d="M105 70 L140 70" stroke="#5b8cff" stroke-width="2" marker-end="url(#arrowV1)"/>
+      <!-- Embedding Model -->
+      <rect x="140" y="45" width="120" height="50" rx="8" stroke="#8b5bff" stroke-width="2"/>
+      <text x="200" y="67" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Embedding</text>
+      <text x="200" y="82" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Model</text>
+      <!-- Arrow -->
+      <path d="M260 70 L295 70" stroke="#8b5bff" stroke-width="2" marker-end="url(#arrowV2)"/>
+      <!-- Vector DB -->
+      <rect x="295" y="45" width="120" height="50" rx="8" stroke="#3fd68c" stroke-width="2"/>
+      <text x="355" y="67" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Vector DB</text>
+      <text x="355" y="82" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="9">(HNSW Index)</text>
+      <!-- Arrow -->
+      <path d="M415 70 L450 70" stroke="#3fd68c" stroke-width="2" marker-end="url(#arrowV3)"/>
+      <!-- ANN Search -->
+      <rect x="450" y="45" width="120" height="50" rx="8" stroke="#ffbe5b" stroke-width="2"/>
+      <text x="510" y="67" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">ANN Search</text>
+      <text x="510" y="82" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="9">(~nearest)</text>
+      <!-- Arrow -->
+      <path d="M570 70 L605 70" stroke="#ffbe5b" stroke-width="2" marker-end="url(#arrowV4)"/>
+      <!-- Results -->
+      <rect x="605" y="45" width="80" height="50" rx="8" stroke="#5b8cff" stroke-width="2"/>
+      <text x="645" y="74" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="12" font-weight="600">Results</text>
+      <!-- Dimension label -->
+      <text x="355" y="125" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="10">384–1536 dimensional vectors</text>
+      <!-- Defs -->
+      <defs>
+        <marker id="arrowV1" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#5b8cff"/></marker>
+        <marker id="arrowV2" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#8b5bff"/></marker>
+        <marker id="arrowV3" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#3fd68c"/></marker>
+        <marker id="arrowV4" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#ffbe5b"/></marker>
+      </defs>
+    </svg>
+    <figcaption>Vector search pipeline: text is embedded into high-dimensional vectors, indexed, and searched via approximate nearest neighbor</figcaption>
+  </figure>
+
+  <p>Embedding models transform text, images, or other data into dense numerical vectors — typically 384 to 1536 dimensions — where semantic similarity corresponds to spatial proximity. "Dog" and "puppy" end up close together; "dog" and "spreadsheet" end up far apart.</p>
+
+  <h2>The Core Problem: Approximate Nearest Neighbor Search</h2>
+  <p>Finding the exact nearest vector among millions is computationally expensive at query time. Vector databases use Approximate Nearest Neighbor (ANN) algorithms to trade a small amount of accuracy for massive speed gains:</p>
+  <ul>
+    <li><strong>HNSW (Hierarchical Navigable Small World)</strong> — builds a multi-layer graph for fast traversal. The most widely used algorithm today (Pinecone, Weaviate, Qdrant).</li>
+    <li><strong>IVF (Inverted File Index)</strong> — clusters vectors, then searches only relevant clusters. Used in FAISS.</li>
+    <li><strong>Product Quantization</strong> — compresses vectors to reduce memory footprint at the cost of some precision.</li>
+  </ul>
+
+  <h2>Choosing a Vector Database</h2>
+  <ul>
+    <li><strong>Pinecone</strong> — fully managed, easy to start, strong for teams that don't want to manage infrastructure.</li>
+    <li><strong>Weaviate / Qdrant</strong> — open-source, self-hostable, rich filtering capabilities alongside vector search.</li>
+    <li><strong>pgvector</strong> — adds vector search to PostgreSQL. Ideal if you already run Postgres and want to avoid a new system.</li>
+    <li><strong>FAISS</strong> — a library, not a database. Best for embedding directly into an application without a separate service.</li>
+  </ul>
+
+  <h2>Hybrid Search: The Production Reality</h2>
+  <p>Pure vector search alone often underperforms for exact-match queries (product SKUs, names, codes). Production systems typically combine:</p>
+  <ul>
+    <li><strong>Vector search</strong> for semantic similarity</li>
+    <li><strong>Keyword search (BM25)</strong> for exact-term matching</li>
+    <li><strong>Metadata filtering</strong> for constraints like date ranges or categories</li>
+    <li><strong>Re-ranking</strong> — a second-pass model that reorders top candidates for final relevance</li>
+  </ul>
+
+  <h2>Operational Considerations</h2>
+  <ul>
+    <li><strong>Index rebuild strategy</strong> — how do you handle updates and deletes without full re-indexing?</li>
+    <li><strong>Embedding model versioning</strong> — changing embedding models requires re-embedding your entire corpus.</li>
+    <li><strong>Cost at scale</strong> — memory-resident indexes get expensive fast; understand your provider's pricing model before committing.</li>
+  </ul>
+
+  <blockquote>A vector database is only as good as the embeddings feeding it. Invest in embedding quality before optimizing index parameters.</blockquote>
+</div>
+</body>
+</html>
