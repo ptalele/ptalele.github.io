@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RAG vs. Fine-Tuning: Choosing the Right AI Approach | Prashant Talele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b0e14;--bg-elev:#11151f;--text:#e6e9f0;--text-muted:#97a0b5;--accent:#5b8cff;--font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+    *{box-sizing:border-box;}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;padding:0;}
+    .wrap{max-width:760px;margin:0 auto;padding:80px 24px 64px;}
+    a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+    .back{display:inline-block;margin-bottom:32px;font-size:14px;color:var(--text-muted);}
+    h1{font-size:clamp(28px,5vw,42px);line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:0 0 16px;}
+    .meta{color:var(--text-muted);font-size:14px;margin-bottom:36px;}
+    h2{font-size:24px;font-weight:700;margin:40px 0 12px;}
+    p,ul,ol{margin:0 0 20px;}ul,ol{padding-left:24px;}li{margin-bottom:8px;}
+    table{width:100%;border-collapse:collapse;margin:0 0 24px;font-size:15px;}
+    th,td{border:1px solid #232a3a;padding:10px 14px;text-align:left;}
+    th{background:var(--bg-elev);}
+    code{background:var(--bg-elev);padding:2px 6px;border-radius:4px;font-size:14px;}
+    blockquote{border-left:3px solid var(--accent);margin:0 0 20px;padding:12px 20px;color:var(--text-muted);font-style:italic;}
+    figure{margin:32px 0;padding:24px;background:var(--bg-elev);border:1px solid #232a3a;border-radius:12px;}
+    figure svg{width:100%;height:auto;display:block;}
+    figcaption{margin-top:14px;font-size:13px;color:var(--text-muted);text-align:center;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="back">&larr; Back to Home</a>
+  <h1>RAG vs. Fine-Tuning: Choosing the Right AI Approach</h1>
+  <div class="meta">March 22, 2025 &middot; AI &middot; 6 min read</div>
+
+  <p>When adapting a large language model to a specific domain, teams face a fundamental choice: Retrieval-Augmented Generation (RAG) or fine-tuning. Each has distinct trade-offs, and picking the wrong one wastes engineering time and budget.</p>
+
+  <h2>How Each Approach Works</h2>
+
+  <figure>
+    <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <!-- RAG Section -->
+      <text x="175" y="22" text-anchor="middle" fill="#5b8cff" font-family="Inter, sans-serif" font-size="13" font-weight="700">RAG Pipeline</text>
+      <rect x="20" y="35" width="90" height="44" rx="8" stroke="#5b8cff" stroke-width="2"/>
+      <text x="65" y="61" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Query</text>
+      <path d="M110 57 L130 57" stroke="#5b8cff" stroke-width="2" marker-end="url(#arrowR1)"/>
+      <rect x="130" y="35" width="90" height="44" rx="8" stroke="#5b8cff" stroke-width="2"/>
+      <text x="175" y="61" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Retrieve</text>
+      <path d="M220 57 L240 57" stroke="#5b8cff" stroke-width="2" marker-end="url(#arrowR1)"/>
+      <rect x="240" y="35" width="90" height="44" rx="8" stroke="#5b8cff" stroke-width="2"/>
+      <text x="285" y="61" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Augment</text>
+      <path d="M330 57 L350 57" stroke="#5b8cff" stroke-width="2" marker-end="url(#arrowR1)"/>
+      <rect x="350" y="35" width="90" height="44" rx="8" stroke="#3fd68c" stroke-width="2"/>
+      <text x="395" y="61" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Generate</text>
+      <!-- Divider -->
+      <line x1="460" y1="20" x2="460" y2="190" stroke="#232a3a" stroke-width="1" stroke-dasharray="4 3"/>
+      <!-- Fine-tune Section -->
+      <text x="570" y="22" text-anchor="middle" fill="#8b5bff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Fine-Tuning</text>
+      <rect x="480" y="35" width="100" height="44" rx="8" stroke="#8b5bff" stroke-width="2"/>
+      <text x="530" y="54" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Training</text>
+      <text x="530" y="69" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Data</text>
+      <path d="M530 79 L530 95" stroke="#8b5bff" stroke-width="2" marker-end="url(#arrowR2)"/>
+      <rect x="480" y="95" width="100" height="44" rx="8" stroke="#ffbe5b" stroke-width="2"/>
+      <text x="530" y="121" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Model</text>
+      <path d="M530 139 L530 155" stroke="#ffbe5b" stroke-width="2" marker-end="url(#arrowR3)"/>
+      <rect x="480" y="155" width="100" height="40" rx="8" stroke="#3fd68c" stroke-width="2"/>
+      <text x="530" y="179" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="11" font-weight="600">Inference</text>
+      <!-- RAG knowledge base note -->
+      <rect x="130" y="100" width="90" height="36" rx="6" stroke="#97a0b5" stroke-width="1" stroke-dasharray="4 2"/>
+      <text x="175" y="122" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="10">Knowledge Base</text>
+      <path d="M175 100 L175 79" stroke="#97a0b5" stroke-width="1" stroke-dasharray="3 2"/>
+      <!-- Defs -->
+      <defs>
+        <marker id="arrowR1" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#5b8cff"/></marker>
+        <marker id="arrowR2" markerWidth="7" markerHeight="7" refX="3.5" refY="7" orient="auto"><path d="M0,0 L3.5,7 L7,0" fill="#8b5bff"/></marker>
+        <marker id="arrowR3" markerWidth="7" markerHeight="7" refX="3.5" refY="7" orient="auto"><path d="M0,0 L3.5,7 L7,0" fill="#ffbe5b"/></marker>
+      </defs>
+    </svg>
+    <figcaption>RAG retrieves context at query time; Fine-tuning bakes knowledge into model weights during training</figcaption>
+  </figure>
+
+  <p><strong>RAG</strong> keeps the base model frozen and retrieves relevant documents from a knowledge base at query time, injecting them into the prompt as context. <strong>Fine-tuning</strong> updates the model's weights using a curated dataset of examples specific to your domain or task.</p>
+
+  <h2>Side-by-Side Comparison</h2>
+  <table>
+    <tr><th>Dimension</th><th>RAG</th><th>Fine-Tuning</th></tr>
+    <tr><td>Knowledge freshness</td><td>Update instantly by editing the index</td><td>Requires retraining to update facts</td></tr>
+    <tr><td>Setup cost</td><td>Lower &mdash; vector DB + retrieval pipeline</td><td>Higher &mdash; labeled data + training infra</td></tr>
+    <tr><td>Hallucination risk</td><td>Reduced &mdash; grounded in retrieved docs</td><td>Can still hallucinate outside training data</td></tr>
+    <tr><td>Best for</td><td>Factual Q&amp;A, evolving knowledge bases</td><td>Style, tone, structured output formats</td></tr>
+    <tr><td>Latency</td><td>Extra retrieval step adds latency</td><td>No extra runtime step</td></tr>
+  </table>
+
+  <h2>When to Use RAG</h2>
+  <ul>
+    <li>Your knowledge base changes frequently (documentation, product catalogs, policies)</li>
+    <li>You need citations or source attribution for generated answers</li>
+    <li>You want to avoid the cost and complexity of training infrastructure</li>
+  </ul>
+
+  <h2>When to Use Fine-Tuning</h2>
+  <ul>
+    <li>You need the model to consistently follow a specific output format or tone</li>
+    <li>The task requires reasoning patterns not well-represented in the base model</li>
+    <li>Latency is critical and you cannot afford an extra retrieval round-trip</li>
+  </ul>
+
+  <h2>The Hybrid Approach</h2>
+  <p>In practice, the strongest production systems combine both: fine-tune the model on your domain's tone, format, and reasoning style, then layer RAG on top for factual grounding and up-to-date knowledge. This gets you the consistency of fine-tuning with the freshness of retrieval.</p>
+
+  <blockquote>Fine-tuning teaches a model how to think. RAG teaches it what to know. Most production systems need both.</blockquote>
+
+  <h2>Practical Recommendation</h2>
+  <p>Start with RAG. It's faster to implement, easier to debug, and easier to iterate on since you're not retraining a model every time requirements change. Only move to fine-tuning once you've identified a specific, measurable gap that retrieval alone cannot close.</p>
+</div>
+</body>
+</html>

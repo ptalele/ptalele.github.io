@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zero Trust Identity Systems: Designing for the Hostile Internet | Prashant Talele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b0e14;--bg-elev:#11151f;--text:#e6e9f0;--text-muted:#97a0b5;--accent:#5b8cff;--font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+    *{box-sizing:border-box;}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;padding:0;}
+    .wrap{max-width:760px;margin:0 auto;padding:80px 24px 64px;}
+    a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+    .back{display:inline-block;margin-bottom:32px;font-size:14px;color:var(--text-muted);}
+    h1{font-size:clamp(28px,5vw,42px);line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:0 0 16px;}
+    .meta{color:var(--text-muted);font-size:14px;margin-bottom:36px;}
+    h2{font-size:24px;font-weight:700;margin:40px 0 12px;}
+    p,ul,ol{margin:0 0 20px;}ul,ol{padding-left:24px;}li{margin-bottom:8px;}
+    code{background:var(--bg-elev);padding:2px 6px;border-radius:4px;font-size:14px;}
+    blockquote{border-left:3px solid var(--accent);margin:0 0 20px;padding:12px 20px;color:var(--text-muted);font-style:italic;}
+    figure{margin:32px 0;padding:24px;background:var(--bg-elev);border:1px solid #232a3a;border-radius:12px;}
+    figure svg{width:100%;height:auto;display:block;}
+    figcaption{margin-top:14px;font-size:13px;color:var(--text-muted);text-align:center;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="back">&larr; Back to Home</a>
+  <h1>Zero Trust Identity Systems: Designing for the Hostile Internet</h1>
+  <div class="meta">January 18, 2025 &middot; Security &middot; 8 min read</div>
+
+  <p>The perimeter-based security model is dead. Modern identity systems must assume that every request is potentially hostile — regardless of whether it comes from inside or outside the network. Zero Trust is the architectural mindset that makes this practical at internet scale.</p>
+
+  <h2>Core Principles</h2>
+  <ul>
+    <li><strong>Never trust, always verify</strong> — every request is authenticated and authorized, even from internal services.</li>
+    <li><strong>Least privilege</strong> — grant the minimum access required for the current operation, for the shortest duration needed.</li>
+    <li><strong>Assume breach</strong> — design so that a compromised component cannot escalate to full system access.</li>
+    <li><strong>Continuous verification</strong> — session validity is not a one-time check; re-evaluate risk signals continuously.</li>
+  </ul>
+
+  <h2>Identity as the New Perimeter</h2>
+  <p>In a Zero Trust model, identity replaces the network boundary as the primary security control. This means:</p>
+  <ul>
+    <li>Strong authentication (multi-factor, phishing-resistant credentials like FIDO2/WebAuthn)</li>
+    <li>Device posture assessment before granting access</li>
+    <li>Contextual signals (location, time, behavior patterns) feeding into access decisions</li>
+    <li>Short-lived tokens over long-lived sessions</li>
+  </ul>
+
+  <h2>Architectural Components</h2>
+
+  <figure>
+    <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" fill="none">
+      <!-- User -->
+      <rect x="20" y="70" width="100" height="50" rx="9" stroke="#5b8cff" stroke-width="2"/>
+      <text x="70" y="99" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="12" font-weight="600">User</text>
+      <!-- Arrow to PEP -->
+      <path d="M120 95 L165 95" stroke="#5b8cff" stroke-width="2" marker-end="url(#arrowZ1)"/>
+      <!-- PEP -->
+      <rect x="165" y="70" width="110" height="50" rx="9" stroke="#3fd68c" stroke-width="2"/>
+      <text x="220" y="92" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="12" font-weight="600">PEP</text>
+      <text x="220" y="107" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="9">Enforcement</text>
+      <!-- Arrow to PDP -->
+      <path d="M275 95 L320 95" stroke="#3fd68c" stroke-width="2" marker-end="url(#arrowZ2)"/>
+      <!-- PDP -->
+      <rect x="320" y="70" width="110" height="50" rx="9" stroke="#8b5bff" stroke-width="2"/>
+      <text x="375" y="92" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="12" font-weight="600">PDP</text>
+      <text x="375" y="107" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="9">Decision</text>
+      <!-- Arrow to IdP -->
+      <path d="M430 95 L475 95" stroke="#8b5bff" stroke-width="2" marker-end="url(#arrowZ3)"/>
+      <!-- IdP -->
+      <rect x="475" y="70" width="110" height="50" rx="9" stroke="#ffbe5b" stroke-width="2"/>
+      <text x="530" y="92" text-anchor="middle" fill="#e6e9f0" font-family="Inter, sans-serif" font-size="12" font-weight="600">IdP</text>
+      <text x="530" y="107" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="9">Identity Provider</text>
+      <!-- Monitoring (below) -->
+      <rect x="240" y="145" width="220" height="36" rx="8" stroke="#ff6b6b" stroke-width="1.5" stroke-dasharray="5 3"/>
+      <text x="350" y="167" text-anchor="middle" fill="#ff6b6b" font-family="Inter, sans-serif" font-size="11" font-weight="500">Continuous Monitoring &amp; Analytics</text>
+      <!-- Monitoring connections -->
+      <path d="M220 120 L300 145" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
+      <path d="M375 120 L375 145" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
+      <path d="M530 120 L430 145" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3 2" opacity="0.6"/>
+      <!-- Resource (far right) -->
+      <rect x="610" y="70" width="75" height="50" rx="9" stroke="#97a0b5" stroke-width="1.5"/>
+      <text x="647" y="99" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="11" font-weight="500">Resource</text>
+      <path d="M275 80 C310 40, 600 40, 625 70" stroke="#3fd68c" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrowZ4)"/>
+      <text x="450" y="38" text-anchor="middle" fill="#97a0b5" font-family="Inter, sans-serif" font-size="9">Allow / Deny</text>
+      <!-- Defs -->
+      <defs>
+        <marker id="arrowZ1" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#5b8cff"/></marker>
+        <marker id="arrowZ2" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#3fd68c"/></marker>
+        <marker id="arrowZ3" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#8b5bff"/></marker>
+        <marker id="arrowZ4" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="#3fd68c"/></marker>
+      </defs>
+    </svg>
+    <figcaption>Zero Trust architecture: every request flows through Policy Enforcement and Decision points with continuous monitoring</figcaption>
+  </figure>
+
+  <ol>
+    <li><strong>Identity Provider (IdP)</strong> — issues tokens after authenticating the user. Must support step-up authentication when risk increases.</li>
+    <li><strong>Policy Decision Point (PDP)</strong> — evaluates access requests against policies incorporating context, role, and risk score.</li>
+    <li><strong>Policy Enforcement Point (PEP)</strong> — sits in the request path and enforces the PDP's decisions. Often implemented as a sidecar or API gateway filter.</li>
+    <li><strong>Continuous monitoring</strong> — behavioral analytics that detect anomalies and trigger re-authentication or session termination.</li>
+  </ol>
+
+  <h2>Challenges at Scale</h2>
+  <ul>
+    <li><strong>Latency budget</strong> — adding auth checks to every request path must not materially impact user experience. Caching decisions (with short TTLs) helps.</li>
+    <li><strong>Token management</strong> — short-lived tokens mean frequent refresh flows. The refresh mechanism itself must be secure against token theft.</li>
+    <li><strong>Migration path</strong> — moving from perimeter-based to Zero Trust is gradual. Start with the highest-value systems and expand.</li>
+    <li><strong>User friction</strong> — more verification steps can frustrate users. Risk-based step-up (challenge only when signals indicate risk) balances security and UX.</li>
+  </ul>
+
+  <blockquote>Security and user experience are not opposites. The best identity systems are invisible when risk is low and uncompromising when risk is high.</blockquote>
+
+  <h2>Practical Starting Points</h2>
+  <p>For teams beginning a Zero Trust journey: (1) enforce MFA everywhere, (2) shorten session lifetimes, (3) implement per-request authorization checks on your most critical APIs, and (4) instrument everything — you cannot enforce what you cannot observe.</p>
+</div>
+</body>
+</html>

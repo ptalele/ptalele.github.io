@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Algorithmic Trading Fundamentals for Engineers | Prashant Talele</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b0e14;--bg-elev:#11151f;--text:#e6e9f0;--text-muted:#97a0b5;--accent:#5b8cff;--font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+    *{box-sizing:border-box;}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.7;padding:0;}
+    .wrap{max-width:760px;margin:0 auto;padding:80px 24px 64px;}
+    a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+    .back{display:inline-block;margin-bottom:32px;font-size:14px;color:var(--text-muted);}
+    h1{font-size:clamp(28px,5vw,42px);line-height:1.15;font-weight:800;letter-spacing:-0.02em;margin:0 0 16px;}
+    .meta{color:var(--text-muted);font-size:14px;margin-bottom:36px;}
+    h2{font-size:24px;font-weight:700;margin:40px 0 12px;}
+    p,ul,ol{margin:0 0 20px;}ul,ol{padding-left:24px;}li{margin-bottom:8px;}
+    code{background:var(--bg-elev);padding:2px 6px;border-radius:4px;font-size:14px;}
+    pre{background:var(--bg-elev);padding:20px;border-radius:10px;overflow-x:auto;font-size:14px;margin:0 0 24px;}pre code{background:none;padding:0;}
+    blockquote{border-left:3px solid var(--accent);margin:0 0 20px;padding:12px 20px;color:var(--text-muted);font-style:italic;}
+    figure{margin:32px 0;padding:24px;background:var(--bg-elev);border:1px solid #232a3a;border-radius:12px;}
+    figure svg{width:100%;height:auto;display:block;}
+    figcaption{margin-top:14px;font-size:13px;color:var(--text-muted);text-align:center;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/" class="back">&larr; Back to Home</a>
+  <h1>Algorithmic Trading Fundamentals for Engineers</h1>
+  <div class="meta">May 28, 2025 &middot; Trading &middot; 10 min read</div>
+
+  <p>Algorithmic trading removes human emotion from market decisions and replaces it with systematic rules executed at speeds impossible for manual traders. For software engineers entering this domain, understanding the core building blocks is essential before writing a single line of strategy code.</p>
+
+  <h2>The Trading Pipeline</h2>
+
+  <figure>
+    <svg viewBox="0 0 700 120" xmlns="http://www.w3.org/2000/svg" aria-label="Trading pipeline: Data, Signal, Risk, Execution, Analysis">
+      <rect width="700" height="120" fill="#0b0e14"/>
+      <rect x="10" y="35" width="110" height="50" rx="8" fill="#141926" stroke="#5b8cff" stroke-width="2"/>
+      <text x="65" y="64" text-anchor="middle" fill="#e6e9f0" font-size="12" font-family="Inter,sans-serif" font-weight="600">Market Data</text>
+      <rect x="155" y="35" width="110" height="50" rx="8" fill="#141926" stroke="#8b5bff" stroke-width="2"/>
+      <text x="210" y="64" text-anchor="middle" fill="#e6e9f0" font-size="12" font-family="Inter,sans-serif" font-weight="600">Signal Gen</text>
+      <rect x="300" y="35" width="110" height="50" rx="8" fill="#141926" stroke="#ff6b6b" stroke-width="2"/>
+      <text x="355" y="64" text-anchor="middle" fill="#e6e9f0" font-size="12" font-family="Inter,sans-serif" font-weight="600">Risk Mgmt</text>
+      <rect x="445" y="35" width="110" height="50" rx="8" fill="#141926" stroke="#3fd68c" stroke-width="2"/>
+      <text x="500" y="64" text-anchor="middle" fill="#e6e9f0" font-size="12" font-family="Inter,sans-serif" font-weight="600">Execution</text>
+      <rect x="590" y="35" width="100" height="50" rx="8" fill="#141926" stroke="#ffbe5b" stroke-width="2"/>
+      <text x="640" y="64" text-anchor="middle" fill="#e6e9f0" font-size="12" font-family="Inter,sans-serif" font-weight="600">Analysis</text>
+      <!-- Arrows -->
+      <path d="M120 60 L155 60" stroke="#5b8cff" stroke-width="2" fill="none" marker-end="url(#at1)"/>
+      <path d="M265 60 L300 60" stroke="#8b5bff" stroke-width="2" fill="none" marker-end="url(#at2)"/>
+      <path d="M410 60 L445 60" stroke="#ff6b6b" stroke-width="2" fill="none" marker-end="url(#at3)"/>
+      <path d="M555 60 L590 60" stroke="#3fd68c" stroke-width="2" fill="none" marker-end="url(#at4)"/>
+      <defs>
+        <marker id="at1" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#5b8cff" stroke-width="1.5"/></marker>
+        <marker id="at2" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#8b5bff" stroke-width="1.5"/></marker>
+        <marker id="at3" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#ff6b6b" stroke-width="1.5"/></marker>
+        <marker id="at4" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#3fd68c" stroke-width="1.5"/></marker>
+      </defs>
+    </svg>
+    <figcaption>The five-stage algorithmic trading pipeline, from market data ingestion to post-trade analysis.</figcaption>
+  </figure>
+
+  <p>Every algorithmic trading system shares a common architecture:</p>
+  <ol>
+    <li><strong>Market data ingestion</strong> — consuming real-time price feeds, order books, and tick data</li>
+    <li><strong>Signal generation</strong> — applying indicators, statistical models, or ML to produce buy/sell signals</li>
+    <li><strong>Risk management</strong> — position sizing, stop-losses, and exposure limits before execution</li>
+    <li><strong>Order execution</strong> — routing orders to exchanges with optimal timing and minimal slippage</li>
+    <li><strong>Post-trade analysis</strong> — P&L attribution, fill analysis, and strategy performance review</li>
+  </ol>
+
+  <h2>Key Strategy Categories</h2>
+  <ul>
+    <li><strong>Mean reversion</strong> — betting that prices return to a statistical average. Works well in range-bound markets.</li>
+    <li><strong>Momentum/Trend following</strong> — riding sustained price moves. Excels in trending markets, suffers in sideways chop.</li>
+    <li><strong>Statistical arbitrage</strong> — exploiting temporary mispricings between correlated instruments.</li>
+    <li><strong>Market making</strong> — continuously quoting bid/ask prices to capture the spread, while managing inventory risk.</li>
+  </ul>
+
+  <h2>Backtesting: The Reality Check</h2>
+  <p>A strategy that looks good on paper often fails in production. Rigorous backtesting guards against overfitting:</p>
+  <ul>
+    <li>Use out-of-sample data — never test on the same data you trained on</li>
+    <li>Account for transaction costs, slippage, and market impact</li>
+    <li>Test across multiple market regimes (bull, bear, sideways, high-volatility)</li>
+    <li>Walk-forward analysis over rolling windows avoids look-ahead bias</li>
+  </ul>
+
+  <h2>Technology Stack Considerations</h2>
+  <p>For most retail and mid-frequency strategies (holding periods of seconds to days):</p>
+  <ul>
+    <li><strong>Python</strong> for research, prototyping, and signal generation (pandas, numpy, scikit-learn)</li>
+    <li><strong>Rust or C++</strong> for low-latency execution where microseconds matter</li>
+    <li><strong>Streaming infrastructure</strong> (Kafka, Redis Streams) for real-time data pipelines</li>
+    <li><strong>Time-series databases</strong> (QuestDB, TimescaleDB) for historical data storage and fast queries</li>
+  </ul>
+
+  <h2>Risk Management Is Non-Negotiable</h2>
+  <blockquote>The first goal of trading is survival. Profits come from those who survive long enough for their edge to compound.</blockquote>
+  <p>Before deploying capital, define hard limits: maximum drawdown per day, maximum position size, maximum correlated exposure. These limits must be enforced at the infrastructure level — not just in strategy logic — so that a bug in one component cannot blow up the entire portfolio.</p>
+
+  <h2>Getting Started</h2>
+  <p>Start with paper trading (simulated orders against live data). Build the full pipeline end-to-end, even if the initial strategy is trivial. The plumbing — data feeds, order management, logging, monitoring — is where most of the engineering effort lives. Once the infrastructure is solid, swapping strategies becomes straightforward.</p>
+</div>
+</body>
+</html>

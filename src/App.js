@@ -1,29 +1,31 @@
-import React, { Component } from 'react';
-import './App.css';
-import Sidebar from './components/sidebar'
-import Introduction from './components/introduction'
-import About from './components/about'
-import Projects from './components/projects'
-import Blog from './components/blog'
-import Timeline from './components/timeline'
+import React from 'react';
+import './theme.css';
+import useReveal from './useReveal';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Expertise from './components/Expertise';
+import Projects from './components/Projects';
+import Writing from './components/Writing';
+import Journey from './components/Journey';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 
-class App extends Component {
-    render() {
-        return (
-            <div id="colorlib-page">
-                <div id="container-wrap">
-                    <Sidebar></Sidebar>
-                    <div id="colorlib-main">
-                        <Introduction></Introduction>
-                        <About></About>
-                        <Projects></Projects>
-                        <Blog></Blog>
-                        <Timeline></Timeline>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+function App() {
+  useReveal();
+  return (
+    <>
+      <Navbar />
+      <main>
+        <Hero />
+        <Expertise />
+        <Projects />
+        <Writing />
+        <Journey />
+        <Contact />
+      </main>
+      <Footer />
+    </>
+  );
 }
 
 export default App;
